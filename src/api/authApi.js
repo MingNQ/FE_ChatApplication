@@ -59,8 +59,9 @@ export async function resendSignUpOtp(request) {
   return res.data;
 }
 
-export async function setToken(token) {
-  localStorage.setItem("token", token);
+export async function setToken(request) {
+  localStorage.setItem("token", request.accessToken);
+  localStorage.setItem("refreshToken", request.refreshToken);
 }
 
 export async function setCurrentUser() {
@@ -74,5 +75,5 @@ export async function setCurrentUser() {
     
     const res = await http.get("/client/users/current-user");
 
-    localStorage.setItem("current-user", res.data.result);
+    localStorage.setItem("currentUser", res.data.result);
 }

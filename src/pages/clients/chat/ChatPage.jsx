@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useChat } from "../../../hooks/useChat.js";
 import { getMessages } from "../../../api/conversationApi.js";
+import { Header } from "../../../components/header";
 
 export default function ChatPage({ token, conversationId }) {
-  const { messages, setMessages, joinConversation, sendMessage } = useChat(token);
+  const { messages, setMessages, joinConversation, sendMessage } =
+    useChat(token);
 
   useEffect(() => {
     joinConversation(conversationId);
@@ -15,6 +17,8 @@ export default function ChatPage({ token, conversationId }) {
   return (
     <>
       <title>Chat</title>
+
+      <Header />
 
       <div>
         <h2>Conversation {conversationId}</h2>
