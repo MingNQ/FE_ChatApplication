@@ -6,6 +6,7 @@ import { SignIn } from "./pages/clients/auth/SignIn";
 import { SignUp } from "./pages/clients/auth/SignUp";
 import { ToastContainer } from "./components/ToastContainer";
 import { useToast } from "./hooks/useToast";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
   const token = localStorage.getItem("accessToken");
@@ -14,13 +15,24 @@ function App() {
 
   return (
     <>
-      <ToastContainer toasts={toasts} onClose={removeToast}/>
+      <ToastContainer toasts={toasts} onClose={removeToast} />
 
       <Routes>
-        <Route index element={<HomePage />} />
+        <Route
+          index
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="chat"
-          element={<ChatPage token={token} conversationId={conversationId} />}
+          element={
+            <ProtectedRoute>
+              <ChatPage token={token} conversationId={conversationId} />
+            </ProtectedRoute>
+          }
         />
         <Route path="sign-in" element={<SignIn />} />
         <Route path="sign-up" element={<SignUp />} />

@@ -103,90 +103,94 @@ export function SignUp() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow">
-        <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+    <>
+      <title>Sign Up</title>
 
-        {error && (
-          <div className="mb-4 text-sm text-red-600 bg-red-50 p-2 rounded">
-            {error}
-          </div>
-        )}
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-md bg-white p-6 rounded-lg shadow">
+          <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
 
-        {!showOtp ? (
-          <>
-            <form onSubmit={handleRegister} className="space-y-4">
-              <div className="flex gap-2">
+          {error && (
+            <div className="mb-4 text-sm text-red-600 bg-red-50 p-2 rounded">
+              {error}
+            </div>
+          )}
+
+          {!showOtp ? (
+            <>
+              <form onSubmit={handleRegister} className="space-y-4">
+                <div className="flex gap-2">
+                  <input
+                    name="firstName"
+                    placeholder="First Name"
+                    onChange={handleChange}
+                    className="w-1/2 border px-3 py-2 rounded"
+                  />
+                  <input
+                    name="lastName"
+                    placeholder="Last Name"
+                    onChange={handleChange}
+                    className="w-1/2 border px-3 py-2 rounded"
+                  />
+                </div>
+
                 <input
-                  name="firstName"
-                  placeholder="First Name"
+                  name="email"
+                  placeholder="Email or Phone"
                   onChange={handleChange}
-                  className="w-1/2 border px-3 py-2 rounded"
+                  className="w-full border px-3 py-2 rounded"
                 />
-                <input
-                  name="lastName"
-                  placeholder="Last Name"
+
+                <PasswordInput
+                  key={0}
+                  placeholder="Password"
+                  value={form.password || ""}
                   onChange={handleChange}
-                  className="w-1/2 border px-3 py-2 rounded"
+                  name="password"
                 />
+
+                <PasswordInput
+                  key={1}
+                  placeholder="Confirm Password"
+                  value={form.confirmPassword || ""}
+                  onChange={handleChange}
+                  name="confirmPassword"
+                />
+
+                <button className="w-full bg-blue-600 text-white py-2 rounded">
+                  Sign Up
+                </button>
+              </form>
+
+              <p className="text-sm text-center mt-4">
+                Have account yet?{" "}
+                <Link to="/sign-in" className="text-blue-600">
+                  Sign In
+                </Link>
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="space-y-4">
+                <OtpInput value={otp} onChange={setOtp} />
+                <button
+                  onClick={handleVerifyOtp}
+                  className="w-full bg-green-600 text-white py-2 rounded"
+                >
+                  Verify OTP
+                </button>
               </div>
 
-              <input
-                name="email"
-                placeholder="Email or Phone"
-                onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
-              />
-
-              <PasswordInput
-                key={0}
-                placeholder="Password"
-                value={form.password || ""}
-                onChange={handleChange}
-                name="password"
-              />
-
-              <PasswordInput
-                key={1}
-                placeholder="Confirm Password"
-                value={form.confirmPassword || ""}
-                onChange={handleChange}
-                name="confirmPassword"
-              />
-
-              <button className="w-full bg-blue-600 text-white py-2 rounded">
-                Sign Up
-              </button>
-            </form>
-
-            <p className="text-sm text-center mt-4">
-              Have account yet?{" "}
-              <Link to="/sign-in" className="text-blue-600">
-                Sign In
-              </Link>
-            </p>
-          </>
-        ) : (
-          <>
-            <div className="space-y-4">
-              <OtpInput value={otp} onChange={setOtp} />
               <button
-                onClick={handleVerifyOtp}
-                className="w-full bg-green-600 text-white py-2 rounded"
+                onClick={handleResendOtp}
+                className="text-sm text-center mt-4 text-blue-600"
               >
-                Verify OTP
+                Resend OTP
               </button>
-            </div>
-
-            <button
-              onClick={handleResendOtp}
-              className="text-sm text-center mt-4 text-blue-600"
-            >
-              Resend OTP
-            </button>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

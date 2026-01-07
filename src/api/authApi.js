@@ -75,5 +75,5 @@ export async function setCurrentUser() {
     
     const res = await http.get("/client/users/current-user");
 
-    localStorage.setItem("currentUser", res.data.result);
+    localStorage.setItem("currentUser", JSON.stringify(res.data.result));
 }

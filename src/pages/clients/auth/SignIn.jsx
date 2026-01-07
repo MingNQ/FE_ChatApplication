@@ -93,74 +93,77 @@ export function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow">
-        <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
+    <>
+      <title>Sign In</title>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-md bg-white p-6 rounded-lg shadow">
+          <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
 
-        {error && (
-          <div className="mb-4 text-sm text-red-600 bg-red-50 p-2 rounded">
-            {error}
-          </div>
-        )}
-
-        {!showOtp ? (
-          <>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <input
-                placeholder="Email or Phone"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border px-3 py-2 rounded"
-              />
-
-              <PasswordInput
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-              />
-
-              <label className="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={remember}
-                  onChange={(e) => setRemember(e.target.checked)}
-                />
-                Remember me
-              </label>
-
-              <button className="w-full bg-blue-600 text-white py-2 rounded">
-                Sign In
-              </button>
-            </form>
-
-            <p className="text-sm text-center mt-4">
-              No account yet?{" "}
-              <Link to="/sign-up" className="text-blue-600">
-                Sign Up
-              </Link>
-            </p>
-          </>
-        ) : (
-          <>
-            <div className="space-y-4">
-              <OtpInput value={otp} onChange={setOtp} />
-              <button
-                onClick={handleVerifyOtp}
-                className="w-full bg-blue-600 text-white py-2 rounded"
-              >
-                Verify OTP
-              </button>
+          {error && (
+            <div className="mb-4 text-sm text-red-600 bg-red-50 p-2 rounded">
+              {error}
             </div>
+          )}
 
-            <button
-              onClick={handleResendOtp}
-              className="text-sm text-center mt-4 text-blue-600"
-            >
-              Resend OTP
-            </button>
-          </>
-        )}
+          {!showOtp ? (
+            <>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <input
+                  placeholder="Email or Phone"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full border px-3 py-2 rounded"
+                />
+
+                <PasswordInput
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                />
+
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={remember}
+                    onChange={(e) => setRemember(e.target.checked)}
+                  />
+                  Remember me
+                </label>
+
+                <button className="w-full bg-blue-600 text-white py-2 rounded">
+                  Sign In
+                </button>
+              </form>
+
+              <p className="text-sm text-center mt-4">
+                No account yet?{" "}
+                <Link to="/sign-up" className="text-blue-600">
+                  Sign Up
+                </Link>
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="space-y-4">
+                <OtpInput value={otp} onChange={setOtp} />
+                <button
+                  onClick={handleVerifyOtp}
+                  className="w-full bg-blue-600 text-white py-2 rounded"
+                >
+                  Verify OTP
+                </button>
+              </div>
+
+              <button
+                onClick={handleResendOtp}
+                className="text-sm text-center mt-4 text-blue-600"
+              >
+                Resend OTP
+              </button>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
