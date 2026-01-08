@@ -9,3 +9,10 @@ export const http = axios.create({
 export function setAuthToken(token) {
   http.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
+
+export function initAuth() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    setAuthToken(token);
+  }
+}

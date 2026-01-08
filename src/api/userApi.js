@@ -1,11 +1,6 @@
-import { http, setAuthToken } from "./http";
+import { http } from "./http";
 
-export async function getUsers() {
-  const token = localStorage.getItem("token");
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-  setAuthToken(token);
-
+export async function getUsers(currentUserId) {
   var res = await http.post("client/users/search", {
     advancedFilter: {
       logic: "and",
@@ -18,7 +13,7 @@ export async function getUsers() {
         {
           field: "id",
           operator: "neq",
-          value: Number.parseInt(currentUser.id),
+          value: currentUserId,
         },
       ],
     },

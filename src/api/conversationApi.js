@@ -1,7 +1,5 @@
-import { http, setAuthToken } from "./http.js";
+import { http } from "./http.js";
 import { createQueryBuilder } from "../utils/buildAdvancedQueryParams.js";
-
-const token = localStorage.getItem("accessToken");
 
 export async function getConversations() {
   const params = new createQueryBuilder(["ignorePagination"]);
@@ -15,7 +13,6 @@ export async function getConversations() {
 }
 
 export async function getMessages(conversationId) {
-  setAuthToken(token);
   const res = await http.get(
     `/client/conversations/${conversationId}/messages`
   );

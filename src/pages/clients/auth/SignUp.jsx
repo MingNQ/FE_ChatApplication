@@ -68,13 +68,8 @@ export function SignUp() {
           accessToken: data.result.accessToken,
           refreshToken: data.result.refreshToken,
         });
-        const user = data.result.user;
 
-        login({
-          id: user.id,
-          name: user.firstName + " " + user.lastName,
-          email: user.email,
-        });
+        await login();
 
         navigate("/", { replace: true });
       } else {

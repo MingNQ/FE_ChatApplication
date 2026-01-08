@@ -62,18 +62,20 @@ export async function resendSignUpOtp(request) {
 export async function setToken(request) {
   localStorage.setItem("token", request.accessToken);
   localStorage.setItem("refreshToken", request.refreshToken);
+
+  setAuthToken(request.accessToken);
 }
 
 export async function setCurrentUser() {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (token == null || token == '') {
-        return;
-    }
+  if (token == null || token == "") {
+    return;
+  }
 
-    setAuthToken(token);
-    
-    const res = await http.get("/client/users/current-user");
+  const res = await http.get("/client/users/current-user");
 
-    localStorage.setItem("currentUser", JSON.stringify(res.data.result));
+  localStorage.setItem("currentUser", JSON.stringify(res.data.result));
+
+  return res.data.result;
 }
