@@ -2,6 +2,9 @@ import axios from "axios";
 
 const apiBaseUrl = "https://localhost:7187/api/v1";
 
+let isRefreshing = false;
+let failedQueue = [];
+
 export const http = axios.create({
   baseURL: apiBaseUrl,
 });
@@ -10,9 +13,65 @@ export function setAuthToken(token) {
   http.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
+export function clearAuth() {
+  delete http.defaults.headers.common["Authorization"];
+  window.location.href = "/sign-in";
+}
+
 export function initAuth() {
   const token = localStorage.getItem("token");
   if (token) {
     setAuthToken(token);
   }
 }
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) prom.reject(error);
+    else prom.resolve(token);
+  });
+  failedQueue = [];
+};
+
+http.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        }).then((token) => {
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return http(originalRequest);
+        });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        const res = await axios.post(
+          apiBaseUrl + "/tokens/refresh",
+          {},
+          { withCredentials: true }
+        );
+
+        const newToken = res.data.accessToken;
+        localStorage.setItem("token", newToken);
+        setAuthToken(newToken);
+
+        processQueue(null, newToken);
+        return http(originalRequest);
+      } catch (err) {
+        processQueue(err, null); // clear state + redirect login
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);

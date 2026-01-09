@@ -1,7 +1,17 @@
 import { UserAvatar } from "./UserAvatar";
 import { AddFriendButton } from "./AddFriendButton";
+import { AcceptFriendButton } from "./AcceptFriendButton";
+import { RejectFriendButton } from "./RejectFriendButton";
 
-export function UserCard({ user, isRequested, onAddFriend }) {
+export function UserCard({
+  user,
+  isRequested,
+  onAddFriend,
+  isReceived,
+  onAccept,
+  onReject,
+  isFriend,
+}) {
   return (
     <div className="bg-white rounded-xl border shadow-sm p-5 flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -13,10 +23,19 @@ export function UserCard({ user, isRequested, onAddFriend }) {
         </div>
       </div>
 
-      <AddFriendButton
-        isRequested={isRequested}
-        onAdd={onAddFriend}
-      />
+      {isFriend ? (
+        <></>
+      ) : isReceived ? (
+        <>
+          <div>
+            <AcceptFriendButton onAccept={onAccept} />
+
+            <RejectFriendButton onReject={onReject} />
+          </div>
+        </>
+      ) : (
+        <AddFriendButton isRequested={isRequested} onAdd={onAddFriend} />
+      )}
     </div>
   );
 }

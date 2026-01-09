@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { setCurrentUser } from "../api/authApi";
+import { clearAuth } from "../api/http";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
@@ -17,6 +18,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("currentUser");
+    clearAuth();
     setUser(null);
   };
 
