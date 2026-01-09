@@ -1,20 +1,39 @@
 import { http } from "./http.js";
-import { createQueryBuilder } from "../utils/buildAdvancedQueryParams.js";
 
 export async function getConversations() {
-  const params = new createQueryBuilder(["ignorePagination"]);
-  const res = await http.post(
-    "/client/conversations/search",
-    params({
-      ignorePagination: true,
-    })
-  );
-  return res.result;
+  const res = await http.get("/client/conversations");
+  return res.data;
+}
+
+export async function getConversationById(id) {
+  const res = await http.get(`/client/conversations/${id}`);
+  return res.data;
+}
+
+export async function getConversationByFriendId(friendId) {
+  const res = await http.get(`/client/conversations/friends/${friendId}`);
+  return res.data;
 }
 
 export async function getMessages(conversationId) {
   const res = await http.get(
     `/client/conversations/${conversationId}/messages`
   );
-  return res.data.result;
+  return res.data;
+}
+
+export async function createConversation(type, name, memberIds) {
+  const res = await http.post("/client/conversations", {
+    type: type,
+    name: name,
+    memberIds: memberIds,
+  });
+  return res.data;
+}
+
+export async function addMember(id, userId) {
+  const res = await http.post(`/client/conversations/${id}`, {
+    userId: userId,
+  });
+  return res.data;
 }

@@ -1,45 +1,62 @@
-import { useEffect } from "react";
-import { useChat } from "../../../hooks/useChat.js";
-import { getMessages } from "../../../api/conversationApi.js";
+import { useEffect, useState } from "react";
 import { Header } from "../../../components/header";
+import { ConversationList } from "../../../components/chat/ConversationList.jsx";
+import { ChatWindow } from "../../../components/chat/ChatWindow.jsx";
+import { useAuth } from "../../../hooks/useAuth.js";
+import { getFriends } from "../../../api/friendshipRequestApi.js";
+import { getConversationByFriendId } from "../../../api/conversationApi.js";
 
-export default function ChatPage({ token, conversationId }) {
-  const { messages, setMessages, joinConversation, sendMessage } =
-    useChat(token);
+export default function ChatPage() {
+  const { user } = useAuth();
+  const [friends, setFriends] = useState([]);
+  const [activeFriend, setActiveFriend] = useState(null);
+  const [messages, setMessage] = useState([]);
 
   useEffect(() => {
-    joinConversation(conversationId);
+    if (!activeFriend) return;
+ 
+    const fetchMessages = async () => {
+      try {
+        const conversationRes = await getConversationByFriendId(
+          activeFriend.id
+        );
+        setMessage(conversationRes.result.messages);
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
 
-    getMessages(conversationId).then((result) => {
-      setMessages(result);
-    });
-  }, [conversationId]);
+    fetchMessages();
+  }, [activeFriend]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchFriends = async () => {
+      try {
+        const friendRes = await getFriends();
+        setFriends(friendRes.result);
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
+
+    fetchFriends();
+  }, [user]);
+
   return (
     <>
       <title>Chat</title>
 
       <Header />
 
-      <div>
-        <h2>Conversation {conversationId}</h2>
-
-        <ul>
-          {messages.map((m, i) => (
-            <li key={i}>
-              <b>{m.senderId}</b>: {m.content}
-            </li>
-          ))}
-        </ul>
-
-        <input
-          placeholder="Type message..."
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              sendMessage(conversationId, e.currentTarget.value);
-              e.currentTarget.value = "";
-            }
-          }}
+      <div className="flex h-[calc(100vh-64px)] bg-gray-100">
+        <ConversationList
+          friends={friends}
+          activeFriend={activeFriend}
+          setActiveFriend={setActiveFriend}
         />
+        <ChatWindow activeUser={activeFriend} messages={messages}/>
       </div>
     </>
   );
