@@ -25,6 +25,15 @@ export function Header() {
         </Link>
       </div>
 
+      <div className="flex-1 flex justify-center">
+        <Link
+          to="/friends"
+          className="text-gray-700 font-medium hover:text-blue-600 transition"
+        >
+          Friends
+        </Link>
+      </div>
+
       <div className="flex-1 flex justify-end items-center gap-3">
         {!user ? (
           <>

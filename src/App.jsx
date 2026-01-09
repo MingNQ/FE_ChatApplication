@@ -7,6 +7,7 @@ import { SignUp } from "./pages/clients/auth/SignUp";
 import { ToastContainer } from "./components/ToastContainer";
 import { useToast } from "./hooks/useToast";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import FriendsPage from "./pages/clients/friends/FriendsPage";
 
 function App() {
   const token = localStorage.getItem("accessToken");
@@ -34,6 +35,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="friends"
+          element={
+            <ProtectedRoute>
+              <FriendsPage />
+            </ProtectedRoute>
+          }
+        />
+        
         <Route path="sign-in" element={<SignIn />} />
         <Route path="sign-up" element={<SignUp />} />
       </Routes>
