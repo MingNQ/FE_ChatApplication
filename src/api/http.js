@@ -15,6 +15,9 @@ export function setAuthToken(token) {
 
 export function clearAuth() {
   delete http.defaults.headers.common["Authorization"];
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("currentUser");
   window.location.href = "/sign-in";
 }
 
@@ -52,20 +55,34 @@ http.interceptors.response.use(
       isRefreshing = true;
 
       try {
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        if (!refreshToken) {
+          clearAuth();
+          return Promise.reject(error);
+        }
+
         const res = await axios.post(
           apiBaseUrl + "/tokens/refresh",
-          {},
-          { withCredentials: true }
+          {
+            accessToken: localStorage.getItem("token"),
+            refreshtoken: refreshToken,
+          }
         );
 
-        const newToken = res.data.accessToken;
-        localStorage.setItem("token", newToken);
-        setAuthToken(newToken);
+        const newToken = res.data.token;
+        const newRefreshToken = res.data.refreshToken;
 
+        localStorage.setItem("token", newToken);
+        localStorage.setItem("refreshToken", newRefreshToken);
+
+        setAuthToken(newToken);
         processQueue(null, newToken);
+
         return http(originalRequest);
       } catch (err) {
         processQueue(err, null); // clear state + redirect login
+        clearAuth();
         return Promise.reject(err);
       } finally {
         isRefreshing = false;
