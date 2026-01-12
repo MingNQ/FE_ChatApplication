@@ -4,12 +4,16 @@ import { ConversationList } from "../../../components/chat/ConversationList.jsx"
 import { ChatWindow } from "../../../components/chat/ChatWindow.jsx";
 import { useAuth } from "../../../hooks/useAuth.js";
 import { getConversationByFriendId, getConversations } from "../../../api/conversationApi.js";
+import { useChat } from "../../../hooks/useChat.js";
 
 export default function ChatPage() {
   const { user } = useAuth();
   const [recentConversations, setRecentConversation] = useState([]);
   const [activeFriend, setActiveFriend] = useState(null);
-  const [messages, setMessage] = useState([]);
+  const [activeConversationId, setActiveConversationId] = useState(0);
+  
+  const token = localStorage.getItem("token");
+  const { messages, setMessages, sendMessage } = useChat(token, activeConversationId);
 
   useEffect(() => {
     if (!activeFriend) return;
@@ -19,7 +23,8 @@ export default function ChatPage() {
         const conversationRes = await getConversationByFriendId(
           activeFriend.id
         );
-        setMessage(conversationRes.result.messages);
+        setActiveConversationId(conversationRes.result.id);
+        setMessages(conversationRes.result.messages);
       } catch (e) {
         console.log(e.message);
       }
@@ -55,7 +60,7 @@ export default function ChatPage() {
           activeFriend={activeFriend}
           setActiveFriend={setActiveFriend}
         />
-        <ChatWindow activeUser={activeFriend} messages={messages}/>
+        <ChatWindow activeUser={activeFriend} messages={messages} onSend={sendMessage}/>
       </div>
     </>
   );

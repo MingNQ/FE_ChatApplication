@@ -6,6 +6,8 @@ export function createChatHub(token) {
   connection = new signalR.HubConnectionBuilder()
     .withUrl("https://localhost:7187/hubs/chat", {
       accessTokenFactory: () => token,
+      transport: signalR.HttpTransportType.WebSockets,
+      skipNegotiation: true
     })
     .withAutomaticReconnect()
     .build();
