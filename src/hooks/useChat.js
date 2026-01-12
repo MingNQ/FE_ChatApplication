@@ -3,7 +3,7 @@ import { createChatHub } from "../realtime/chathub.js";
 import { useAuth } from "./useAuth.js";
 import * as signalR from "@microsoft/signalr";
 
-export function useChat(token, activeConversationId) {
+export function useChat(token, activeConversationId, onMessageArrived) {
   const [messages, setMessages] = useState([]);
   const { user } = useAuth();
   const hubRef = useRef(null);
@@ -33,6 +33,8 @@ export function useChat(token, activeConversationId) {
 
         return [...prev, message];
       });
+      
+      onMessageArrived?.(message);
     };
 
     hub.on("MessageReceived", onMessageReceived);

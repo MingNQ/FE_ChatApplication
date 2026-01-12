@@ -3,7 +3,10 @@ import { Header } from "../../../components/header";
 import { ConversationList } from "../../../components/chat/ConversationList.jsx";
 import { ChatWindow } from "../../../components/chat/ChatWindow.jsx";
 import { useAuth } from "../../../hooks/useAuth.js";
-import { getConversationByFriendId, getConversations } from "../../../api/conversationApi.js";
+import {
+  getConversationByFriendId,
+  getConversations,
+} from "../../../api/conversationApi.js";
 import { useChat } from "../../../hooks/useChat.js";
 
 export default function ChatPage() {
@@ -11,13 +14,37 @@ export default function ChatPage() {
   const [recentConversations, setRecentConversation] = useState([]);
   const [activeFriend, setActiveFriend] = useState(null);
   const [activeConversationId, setActiveConversationId] = useState(0);
-  
-  const token = localStorage.getItem("token");
-  const { messages, setMessages, sendMessage } = useChat(token, activeConversationId);
 
+  const token = localStorage.getItem("token");
+
+  const handleMessageArrived = (message) => {
+    setRecentConversation((prev) => {
+      const index = prev.findIndex((c) => c.id === message.conversationId);
+
+      if (index === -1) return prev;
+
+      const updated = {
+        ...prev[index],
+        lastMessageContent: message.content,
+        lastMessageSentAt: message.sentAt,
+        unreadCount:
+          message.senderId !== user.id
+            ? prev[index].unreadCount + 1
+            : prev[index].unreadCount,
+      };
+
+      return [updated, ...prev.filter((_, i) => i !== index)];
+    });
+  };
+
+  const { messages, setMessages, sendMessage } = useChat(
+    token,
+    activeConversationId,
+    handleMessageArrived
+  );
   useEffect(() => {
     if (!activeFriend) return;
- 
+
     const fetchMessages = async () => {
       try {
         const conversationRes = await getConversationByFriendId(
@@ -60,7 +87,11 @@ export default function ChatPage() {
           activeFriend={activeFriend}
           setActiveFriend={setActiveFriend}
         />
-        <ChatWindow activeUser={activeFriend} messages={messages} onSend={sendMessage}/>
+        <ChatWindow
+          activeUser={activeFriend}
+          messages={messages}
+          onSend={sendMessage}
+        />
       </div>
     </>
   );
