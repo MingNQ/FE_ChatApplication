@@ -3,12 +3,11 @@ import { Header } from "../../../components/header";
 import { ConversationList } from "../../../components/chat/ConversationList.jsx";
 import { ChatWindow } from "../../../components/chat/ChatWindow.jsx";
 import { useAuth } from "../../../hooks/useAuth.js";
-import { getFriends } from "../../../api/friendshipRequestApi.js";
-import { getConversationByFriendId } from "../../../api/conversationApi.js";
+import { getConversationByFriendId, getConversations } from "../../../api/conversationApi.js";
 
 export default function ChatPage() {
   const { user } = useAuth();
-  const [friends, setFriends] = useState([]);
+  const [recentConversations, setRecentConversation] = useState([]);
   const [activeFriend, setActiveFriend] = useState(null);
   const [messages, setMessage] = useState([]);
 
@@ -32,16 +31,16 @@ export default function ChatPage() {
   useEffect(() => {
     if (!user) return;
 
-    const fetchFriends = async () => {
+    const fetchConversations = async () => {
       try {
-        const friendRes = await getFriends();
-        setFriends(friendRes.result);
+        const conversationRes = await getConversations();
+        setRecentConversation(conversationRes.result);
       } catch (e) {
         console.log(e.message);
       }
     };
 
-    fetchFriends();
+    fetchConversations();
   }, [user]);
 
   return (
@@ -52,7 +51,7 @@ export default function ChatPage() {
 
       <div className="flex h-[calc(100vh-64px)] bg-gray-100">
         <ConversationList
-          friends={friends}
+          conversations={recentConversations}
           activeFriend={activeFriend}
           setActiveFriend={setActiveFriend}
         />
