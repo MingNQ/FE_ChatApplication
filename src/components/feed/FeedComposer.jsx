@@ -20,7 +20,7 @@ export default function FeedComposer() {
             `}
         />
 
-        <div className="flex justify-between mt-3 text-sm text-gray-600">
+        <div className="flex justify-between mt-3 text-base text-gray-600">
           <button type="button">📷 Photo</button>
           <button type="button">🎥 Video</button>
           <button type="button">😊 Feeling</button>

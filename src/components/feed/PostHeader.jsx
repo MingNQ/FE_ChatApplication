@@ -1,3 +1,5 @@
+import { formatTimeAgo } from "../../utils/dateTimeUtils";
+
 export function PostHeader({ post }) {
   return (
     <div className="flex items-center gap-3 p-4">
@@ -5,7 +7,7 @@ export function PostHeader({ post }) {
       <div>
         <div className="font-semibold">{post.author?.fullName}</div>
         <div className="text-xs text-gray-500">
-          {new Date(post.createdOn).toLocaleString()}
+          {formatTimeAgo(new Date(post.createdOn))}
         </div>
       </div>
     </div>

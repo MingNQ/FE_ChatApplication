@@ -36,7 +36,7 @@ export function PostContent({ content }) {
   };
 
   return (
-    <div className="flex px-4 text-gray-800 text-sm leading-relaxed">
+    <div className="flex px-4 pb-2 text-gray-800 text-sm leading-relaxed">
       <div className={expanded ? "" : "line-clamp-4"}>{renderText()}</div>
 
       {content.length > 250 && (

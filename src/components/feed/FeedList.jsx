@@ -1,25 +1,67 @@
 import { useEffect, useState } from "react";
-import { getPost } from "../../api/feedApi";
+import {
+  commentPost,
+  getPost,
+  reactPost,
+  updateReactPost,
+} from "../../api/feedApi";
 import { PostItem } from "./PostItem";
+import { useAuth } from "../../hooks/useAuth";
 
 export function FeedList() {
+  const { user } = useAuth();
   const [posts, setPost] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-        const res = await getPost();
-        console.log(res.result.data);
-        setPost(res.result.data);
-    }
+      const res = await getPost();
+      setPost(res.result.data);
+    };
 
     fetchPosts();
   }, []);
 
+  const handleOnReact = async (postId, type, value) => {
+    const post = posts.find((p) => p.id === postId);
+    if (!post) return;
+
+    const myReaction = post.reactions.find((r) => r.userId === user.id);
+
+    let res;
+
+    if (!myReaction) {
+      res = await reactPost(postId, value);
+    } else {
+      res = await updateReactPost(postId, value, myReaction.id);
+    }
+
+    const updatedPost = res.result;
+
+    setPost((prev) => prev.map((p) => (p.id === postId ? updatedPost : p)));
+  };
+  const handleOnComment = (id, value) => {
+    commentPost(id, null, value).then((res) => {
+      const updatedPost = res.result;
+
+      setPost((prev) => prev.map((p) => (p.id === id ? updatedPost : p)));
+    });
+  };
+
   return (
     <div className="flex flex-col gap-4">
-      {posts.map((post) => (
-        <PostItem key={post.id} post={post} />
-      ))}
+      {posts.map((post) => {
+        const myReaction = post.reactions.find((r) => r.userId === user.id);
+
+        return (
+          <PostItem
+            key={post.id}
+            post={post}
+            myReaction={myReaction}
+            onReact={(id, type, value) => handleOnReact(id, type, value)}
+            onComment={(id, value) => handleOnComment(id, value)}
+          />
+        );
+      })}
     </div>
   );
 }
