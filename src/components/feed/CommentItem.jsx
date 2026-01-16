@@ -1,6 +1,6 @@
 import { formatTimeAgo } from "../../utils/dateTimeUtils";
 
-export function CommentItem({ comment }) {
+export function CommentItem({ post, userId, comment, onDelete }) {
   return (
     <div>
       <div className="flex gap-3">
@@ -26,8 +26,22 @@ export function CommentItem({ comment }) {
         <div className="text-xs text-gray-500">
           {formatTimeAgo(new Date(comment.createdOn))}
         </div>
-        <button className="text-xs text-gray-700 hover:text-gray-900">Reply</button>
-        <button className="text-xs text-gray-600 hover:text-red-500">Delete</button>
+        <button className="text-xs text-gray-700 hover:text-gray-900">
+          Reply
+        </button>
+        {comment.userId === userId && (
+          <>
+            <button className="text-xs text-gray-600 hover:text-gray-900">
+              Edit
+            </button>
+            <button
+              onClick={() => onDelete(post.id, comment.id)}
+              className="text-xs text-gray-600 hover:text-red-500"
+            >
+              Delete
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

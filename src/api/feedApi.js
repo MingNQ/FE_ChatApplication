@@ -69,9 +69,7 @@ export async function updateComment(postId, commentId, content) {
 }
 
 export async function deleteComment(postId, commentId) {
-  const res = await http.delete(`/client/posts/comment/${commentId}`, {
-    postId: postId,
-  });
+  const res = await http.delete(`/client/posts/${postId}/comment/${commentId}`);
 
   return res.data;
 }

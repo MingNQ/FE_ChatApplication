@@ -5,7 +5,7 @@ import { CommentList } from "./CommentList";
 import { CommentInput } from "./CommentInput";
 import { ReactionBar } from "./ReactionBar";
 
-export function CommentModal({ post, myReaction, onClose, onSubmit, onReact }) {
+export function CommentModal({ post, userId, myReaction, onClose, onSubmit, onReact, onDelete }) {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-center">
       <div className="bg-white w-full max-w-xl rounded-xl shadow-lg max-h-[90vh] flex flex-col">
@@ -20,7 +20,7 @@ export function CommentModal({ post, myReaction, onClose, onSubmit, onReact }) {
           <PostHeader post={post} />
           <PostContent content={post.content} />
           <ReactionBar post={post} myReaction={myReaction} onReact={onReact} />
-          <CommentList comments={post.comments} />
+          <CommentList post={post} userId={userId} comments={post.comments} onDelete={onDelete}/>
         </div>
 
         <div className="px-4 py-3">

@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import {
   commentPost,
+  deleteComment,
   getPost,
   reactPost,
   updateReactPost,
 } from "../../api/feedApi";
 import { PostItem } from "./PostItem";
 import { useAuth } from "../../hooks/useAuth";
+import { useToast } from "../../hooks/useToast";
 
 export function FeedList() {
   const { user } = useAuth();
   const [posts, setPost] = useState([]);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -47,6 +50,15 @@ export function FeedList() {
     });
   };
 
+  const handleDeleteComment = (postId, commentId) => {
+    deleteComment(postId, commentId).then((res) => {
+      const updatedPost = res.result;
+      setPost((prev) => prev.map((p) => (p.id === postId ? updatedPost : p)));
+    });
+
+    toast.info("Comment deleted successfully");
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {posts.map((post) => {
@@ -55,10 +67,14 @@ export function FeedList() {
         return (
           <PostItem
             key={post.id}
+            userId={user.id}
             post={post}
             myReaction={myReaction}
             onReact={(id, type, value) => handleOnReact(id, type, value)}
             onComment={(id, value) => handleOnComment(id, value)}
+            onDelete={(postId, commentId) =>
+              handleDeleteComment(postId, commentId)
+            }
           />
         );
       })}
