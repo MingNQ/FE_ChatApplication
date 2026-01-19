@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Header } from "../../../components/header";
+import { Header } from "../../../components/Header";
 import { ConversationList } from "../../../components/chat/ConversationList.jsx";
 import { ChatWindow } from "../../../components/chat/ChatWindow.jsx";
 import { useAuth } from "../../../hooks/useAuth.js";

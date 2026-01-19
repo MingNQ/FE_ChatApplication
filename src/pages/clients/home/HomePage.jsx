@@ -1,6 +1,6 @@
 import FeedComposer from "../../../components/feed/FeedComposer";
 import { FeedList } from "../../../components/feed/FeedList";
-import { Header } from "../../../components/header";
+import { Header } from "../../../components/Header";
 
 export function HomePage() {
   return (

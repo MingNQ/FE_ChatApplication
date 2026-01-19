@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { createChatHub } from "../realtime/chathub.js";
+import { createChatHub } from "../realtime/chatHub.js";
 import { useAuth } from "./useAuth.js";
 import * as signalR from "@microsoft/signalr";
 
