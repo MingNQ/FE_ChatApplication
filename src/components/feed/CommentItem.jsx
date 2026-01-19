@@ -1,6 +1,25 @@
+import { useState } from "react";
 import { formatTimeAgo } from "../../utils/dateTimeUtils";
 
-export function CommentItem({ post, userId, comment, onDelete }) {
+export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState(comment.content);
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    if (!editContent.trim()) return;
+
+    setSaving(true);
+    await onEdit(post.id, comment.id, editContent);
+    setSaving(false);
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setEditContent(comment.content);
+    setIsEditing(false);
+  };
+
   return (
     <div>
       <div className="flex gap-3">
@@ -10,35 +29,72 @@ export function CommentItem({ post, userId, comment, onDelete }) {
         />
 
         <div
-          className=" 
+          className="
             flex flex-col max-w-[85%]
             bg-gray-100 rounded-xl px-3 py-2
             text-sm
             break-words
-            whitespace-pre-wrap"
+            whitespace-pre-wrap
+          "
         >
           <div className="font-semibold text-sm">{comment.user?.fullName}</div>
 
-          <p className="text-sm">{comment.content}</p>
+          {!isEditing ? (
+            <p className="text-sm">{comment.content}</p>
+          ) : (
+            <textarea
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+              rows={2}
+              className="
+                w-full mt-1 text-sm
+                bg-white border rounded-lg p-2
+                resize-none outline-none
+                focus:ring-1 focus:ring-blue-400
+              "
+              autoFocus
+            />
+          )}
         </div>
       </div>
-      <div className="flex mt-1 justify-start items-center gap-4 px-11 text-gray-500">
-        <div className="text-xs text-gray-500">
-          {formatTimeAgo(new Date(comment.createdOn))}
-        </div>
-        <button className="text-xs text-gray-700 hover:text-gray-900">
-          Reply
-        </button>
-        {comment.userId === userId && (
+
+      <div className="flex mt-1 items-center gap-4 px-11 text-xs text-gray-500">
+        <span>{formatTimeAgo(new Date(comment.createdOn))}</span>
+
+        {!isEditing && (
           <>
-            <button className="text-xs text-gray-600 hover:text-gray-900">
-              Edit
-            </button>
+            <button className="hover:underline">Reply</button>
+
+            {comment.userId === userId && (
+              <>
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="hover:underline"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => onDelete(post.id, comment.id)}
+                  className="hover:text-red-500"
+                >
+                  Delete
+                </button>
+              </>
+            )}
+          </>
+        )}
+
+        {isEditing && (
+          <>
             <button
-              onClick={() => onDelete(post.id, comment.id)}
-              className="text-xs text-gray-600 hover:text-red-500"
+              onClick={handleSave}
+              disabled={saving}
+              className="text-blue-600 font-medium hover:underline disabled:opacity-50"
             >
-              Delete
+              Save
+            </button>
+            <button onClick={handleCancel} className="hover:underline">
+              Cancel
             </button>
           </>
         )}

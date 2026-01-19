@@ -4,6 +4,7 @@ import {
   deleteComment,
   getPost,
   reactPost,
+  updateComment,
   updateReactPost,
 } from "../../api/feedApi";
 import { PostItem } from "./PostItem";
@@ -59,6 +60,15 @@ export function FeedList() {
     toast.info("Comment deleted successfully");
   };
 
+  const handleEditComment = (postId, commentId, content) => {
+    updateComment(postId, commentId, content).then((res) => {
+      const updatedPost = res.result;
+      setPost((prev) => prev.map((p) => (p.id === postId ? updatedPost : p)));
+    });
+
+    toast.info("Comment updated successfully");
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {posts.map((post) => {
@@ -75,6 +85,9 @@ export function FeedList() {
             onDelete={(postId, commentId) =>
               handleDeleteComment(postId, commentId)
             }
+            onEdit={(postId, commentId, content) => {
+              handleEditComment(postId, commentId, content);
+            }}
           />
         );
       })}

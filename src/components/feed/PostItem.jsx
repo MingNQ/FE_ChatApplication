@@ -5,7 +5,15 @@ import { PostHeader } from "./PostHeader";
 import { PostMedia } from "./PostMedia";
 import { ReactionBar } from "./ReactionBar";
 
-export function PostItem({ post, userId, myReaction, onReact, onComment, onDelete }) {
+export function PostItem({
+  post,
+  userId,
+  myReaction,
+  onReact,
+  onComment,
+  onDelete,
+  onEdit,
+}) {
   const [openComments, setOpenComments] = useState(false);
 
   return (
@@ -29,6 +37,7 @@ export function PostItem({ post, userId, myReaction, onReact, onComment, onDelet
           onClose={() => setOpenComments(false)}
           onSubmit={onComment}
           onDelete={onDelete}
+          onEdit={onEdit}
         />
       )}
     </div>
