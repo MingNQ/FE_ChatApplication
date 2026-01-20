@@ -15,9 +15,15 @@ export async function getConversationByFriendId(friendId) {
   return res.data;
 }
 
-export async function getMessages(conversationId) {
+export async function getMessages(conversationId, cursor = null, limit = 20) {
+  if (!cursor) {
+    cursor = "";
+  } else {
+    cursor = new Date(cursor).toISOString();
+  }
+
   const res = await http.get(
-    `/client/conversations/${conversationId}/messages`
+    `/client/conversations/${conversationId}/messages?cursor=${cursor}&limit=${limit}`,
   );
   return res.data;
 }

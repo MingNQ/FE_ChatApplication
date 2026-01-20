@@ -5,6 +5,7 @@ export function ConversationList({
   conversations,
   activeFriend,
   setActiveFriend,
+  setCurrentConversation,
 }) {
   const { user } = useAuth();
 
@@ -21,7 +22,7 @@ export function ConversationList({
 
         {conversations.map((conversation) => {
           const members = conversation.members.filter(
-            (m) => m.userId != user.id
+            (m) => m.userId != user.id,
           );
 
           return (
@@ -34,7 +35,10 @@ export function ConversationList({
               }
               lastMessage={conversation.lastMessageContent}
               active={members[0].userId === activeFriend?.id}
-              onClick={() => setActiveFriend(members[0].user)}
+              onClick={() => {
+                setActiveFriend(members[0].user);
+                setCurrentConversation(conversation);
+              }}
             />
           );
         })}

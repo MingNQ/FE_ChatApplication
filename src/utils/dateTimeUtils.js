@@ -15,4 +15,59 @@ function formatTimeAgo(date) {
   return new Date(date).toLocaleDateString("vi-VN");
 }
 
-export { formatTimeAgo };
+export function getWeekdayLabel(date) {
+  const d = new Date(date);
+
+  const weekdays = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+  ];
+
+  return weekdays[d.getDay()];
+}
+
+function subDays(date, days) {
+  const d = new Date(date);
+  d.setDate(d.getDate() - days);
+  return d;
+}
+
+function isSameDay(d1, d2) {
+  return (
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate()
+  );
+}
+
+function shouldShowDateDivider(curr, prev) {
+  if (!prev) return true;
+
+  return !isSameDay(new Date(curr.sentAt), new Date(prev.sentAt));
+}
+
+function shouldShowTimeDivider(curr, prev) {
+  if (!prev) return false;
+
+  const diff = new Date(curr.sentAt) - new Date(prev.sentAt);
+
+  return diff > 15 * 60 * 1000;
+}
+
+function formatDateLabel(date) {
+  const d = new Date(date);
+
+  return getWeekdayLabel(d);
+}
+
+export {
+  formatTimeAgo,
+  shouldShowDateDivider,
+  shouldShowTimeDivider,
+  formatDateLabel,
+};
