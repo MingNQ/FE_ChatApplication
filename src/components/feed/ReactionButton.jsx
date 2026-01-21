@@ -29,7 +29,7 @@ export function ReactionButton({ myReaction, onReact }) {
     >
       {open && (
         <div
-          className="absolute -top-10 z-50"
+          className="absolute -top-10 z-50 ml-14"
           onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
         >
