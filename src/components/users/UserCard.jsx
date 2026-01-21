@@ -2,6 +2,7 @@ import { UserAvatar } from "./UserAvatar";
 import { AddFriendButton } from "./AddFriendButton";
 import { AcceptFriendButton } from "./AcceptFriendButton";
 import { RejectFriendButton } from "./RejectFriendButton";
+import { useNavigate } from "react-router";
 
 export function UserCard({
   user,
@@ -12,8 +13,15 @@ export function UserCard({
   onReject,
   isFriend,
 }) {
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-white rounded-xl border shadow-sm p-5 flex items-center justify-between">
+    <div
+      className="bg-white rounded-xl border shadow-sm p-5 flex items-center justify-between cursor-pointer hover:shadow-md transition"
+      onClick={() => {
+        navigate(`/${user.id}`);
+      }}
+    >
       <div className="flex items-center gap-4">
         <UserAvatar name={user.fullName} />
 

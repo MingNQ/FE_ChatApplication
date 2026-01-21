@@ -8,10 +8,9 @@ import { ToastContainer } from "./components/ToastContainer";
 import { useToast } from "./hooks/useToast";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import FriendsPage from "./pages/clients/friends/FriendsPage";
+import ProfilePage from "./pages/clients/home/ProfilePage";
 
 function App() {
-  const token = localStorage.getItem("accessToken");
-  const conversationId = 3; // TO-DO: implement conversation
   const { toasts, removeToast } = useToast();
 
   return (
@@ -31,7 +30,7 @@ function App() {
           path="chat"
           element={
             <ProtectedRoute>
-              <ChatPage token={token} conversationId={conversationId} />
+              <ChatPage />
             </ProtectedRoute>
           }
         />
@@ -44,7 +43,16 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
+        <Route
+          path=":userId"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="sign-in" element={<SignIn />} />
         <Route path="sign-up" element={<SignUp />} />
       </Routes>

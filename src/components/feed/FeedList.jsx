@@ -3,6 +3,7 @@ import {
   commentPost,
   deleteComment,
   getPost,
+  getPostByUserId,
   reactPost,
   updateComment,
   updateReactPost,
@@ -11,19 +12,24 @@ import { PostItem } from "./PostItem";
 import { useAuth } from "../../hooks/useAuth";
 import { useToast } from "../../hooks/useToast";
 
-export function FeedList() {
+export function FeedList({ userId }) {
   const { user } = useAuth();
   const [posts, setPost] = useState([]);
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await getPost();
-      setPost(res.result.data);
+      if (!userId) {
+        const res = await getPost();
+        setPost(res.result.data);
+      } else {
+        const res = await getPostByUserId(userId);
+        setPost(res.result);
+      }
     };
 
     fetchPosts();
-  }, []);
+  }, [user, userId]);
 
   const handleOnReact = async (postId, type, value) => {
     const post = posts.find((p) => p.id === postId);

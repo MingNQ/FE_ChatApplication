@@ -39,7 +39,6 @@ export function CreatePostModal({ onClose }) {
   const handleSubmit = async () => {
     if (!content.trim || (!content.trim() && files.length === 0)) return;
 
-    // TODO: call API
     const request = {
       content,
       visibility,
@@ -58,7 +57,7 @@ export function CreatePostModal({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-center">
+    <div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-center m-0">
       <div className="bg-white rounded-xl w-full max-w-md shadow-lg">
         <div className="flex justify-between items-center p-4 border-b">
           <h3 className="font-semibold text-lg">Create post</h3>

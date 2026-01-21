@@ -24,7 +24,7 @@ export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
     <div>
       <div className="flex gap-3">
         <img
-          src={comment.user?.avatar}
+          src={comment.user?.avatar ?? "images/default-avatar.jpg"}
           className="w-8 h-8 rounded-full object-cover"
         />
 
