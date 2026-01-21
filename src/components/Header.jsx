@@ -6,13 +6,22 @@ export function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-16 px-6 flex items-center bg-white border-b border-gray-200">
+    <header className="fixed top-0 left-0 right-0 h-16 px-6 flex items-center bg-white border-b border-gray-200 z-50">
       <div className="flex-1 flex items-center">
         <Link
           to="/"
           className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition"
         >
           My App
+        </Link>
+      </div>
+
+      <div className="flex-1 flex justify-center">
+        <Link
+          to="/"
+          className="text-gray-700 font-medium hover:text-blue-600 transition"
+        >
+          Home
         </Link>
       </div>
 
@@ -58,7 +67,16 @@ export function Header() {
                 {user.name?.[0]?.toUpperCase() || "U"}
               </div>
 
-              <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow opacity-0 group-hover:opacity-100 transition">
+              <div className="absolute right-0 mt-2 w-45 bg-white border rounded shadow opacity-0 group-hover:opacity-100 transition">
+                <button
+                  onClick={() => {
+                    navigate(`/${user.id}`);
+                  }}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  My personal page
+                </button>
+
                 <button
                   onClick={() => {
                     logout();

@@ -11,7 +11,7 @@ export function CommentInput({ post, onSubmit }) {
 
   return (
     <div className="flex items-center gap-3">
-      <img src="/default-avatar.png" className="w-8 h-8 rounded-full" />
+      <img src="images/default-avatar.jpg" className="w-8 h-8 rounded-full" />
 
       <input
         value={value}

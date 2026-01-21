@@ -21,3 +21,13 @@ export async function getUsers(currentUserId) {
 
   return res.data;
 }
+
+export async function getUserById(userId) {
+  var res = await http.get(`/client/users/${userId}`);
+  return res.data;
+}
+
+export async function getFriendByUserId(userId) {
+  var res = await http.get(`/client/users/${userId}/friends`);
+  return res.data;
+}
