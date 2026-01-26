@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { setCurrentUser } from "../api/authApi";
+import { setCurrentUser, setToken } from "../api/authApi";
 import { clearAuth } from "../api/http";
 
 export function AuthProvider({ children }) {
@@ -8,10 +8,14 @@ export function AuthProvider({ children }) {
     const storedUser = localStorage.getItem("currentUser");
     return storedUser ? JSON.parse(storedUser) : null;
   });
+  const [token, setAuthToken] = useState(null);
 
-  const login = async () => {
-    const userData = await setCurrentUser();
-    setUser(userData);
+  const login = async (accessToken, refreshToken) => {
+    setAuthToken(accessToken);
+    setToken({ accessToken, refreshToken });
+    setCurrentUser().then((res) => {
+      setUser(res);
+    });
   };
 
   const logout = () => {
@@ -20,7 +24,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ token, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

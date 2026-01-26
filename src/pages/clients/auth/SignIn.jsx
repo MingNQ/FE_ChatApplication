@@ -6,7 +6,6 @@ import {
   initiateSignIn,
   verifySignIn,
   resendSignInOtp,
-  setToken,
 } from "../../../api/authApi";
 import { useAuth } from "../../../hooks/useAuth";
 import { useToast } from "../../../hooks/useToast";
@@ -53,12 +52,7 @@ export function SignIn() {
 
       if (data.success == true) {
         toast.success(data.result.message);
-        setToken({
-          accessToken: data.result.accessToken,
-          refreshToken: data.result.refreshToken,
-        });
-
-        await login();
+        await login(data.result.accessToken, data.result.refreshToken);
 
         navigate("/", { replace: true });
       } else {

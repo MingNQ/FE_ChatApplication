@@ -1,18 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import { createChatHub } from "../realtime/chatHub.js";
+import { useContext, useEffect, useState } from "react";
 import { useAuth } from "./useAuth.js";
 import * as signalR from "@microsoft/signalr";
+import { SignalRContext } from "../contexts/SignalRContext.jsx";
 
-export function useChat(token, activeConversationId, onMessageArrived) {
+export function useChat(activeConversationId, onMessageArrived) {
   const [messages, setMessages] = useState([]);
   const { user } = useAuth();
-  const hubRef = useRef(null);
+  const connection = useContext(SignalRContext);
 
   useEffect(() => {
-    if (!token) return;
-
-    const hub = createChatHub(token);
-    hubRef.current = hub;
+    if (!connection || !activeConversationId) return;
 
     const onMessageReceived = (message) => {
       if (message.conversationId != activeConversationId) return;
@@ -37,34 +34,20 @@ export function useChat(token, activeConversationId, onMessageArrived) {
       onMessageArrived?.(message);
     };
 
-    hub.on("MessageReceived", onMessageReceived);
+    connection.on("MessageReceived", onMessageReceived);
 
-    hub.start().then(async () => {
-      if (activeConversationId) {
-        await hub.invoke("JoinConversation", activeConversationId);
-      }
-    });
-
-    hub.onreconnected(async () => {
-      if (activeConversationId) {
-        await hub.invoke("JoinConversation", activeConversationId);
-      }
-    });
-
+    if (connection.state === signalR.HubConnectionState.Connected) {
+      connection.invoke("JoinConversation", activeConversationId);
+    }
+    
     return () => {
-      if (
-        hubRef.current &&
-        hubRef.current.state === signalR.HubConnectionState.Connected
-      ) {
-        hub.off("MessageReceived", onMessageReceived);
-        hubRef.current.stop();
-        hubRef.current = null;
-      }
+      connection.off("MessageReceived", onMessageReceived);
+      connection.invoke("LeaveConversation", activeConversationId);
     };
-  }, [token, activeConversationId]);
+  }, [connection, activeConversationId]);
 
   const sendMessage = async (content) => {
-    if (!hubRef.current) return;
+    if (!connection) return;
 
     const clientTempId = crypto.randomUUID();
 
@@ -78,7 +61,7 @@ export function useChat(token, activeConversationId, onMessageArrived) {
 
     setMessages((prev) => [...prev, optimisticMessage]);
 
-    await hubRef.current.invoke("SendMessage", {
+    await connection.invoke("SendMessage", {
       conversationId: activeConversationId,
       content,
       senderId: user.id,

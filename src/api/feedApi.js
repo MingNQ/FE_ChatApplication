@@ -8,6 +8,11 @@ export async function getPost() {
   return res.data;
 }
 
+export async function getNewFeedPosts() {
+  const res = await http.get("/client/posts/feed");
+  return res.data;
+}
+
 export async function getPostByUserId(userId) {
   const res = await http.get("/client/posts/user/" + userId);
   return res.data; 

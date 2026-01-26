@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChatHeader } from "./ChatHeader";
 import { MessageBubble } from "./MessageBubble";
 import { MessageInput } from "./MessageInput";
@@ -16,6 +16,7 @@ export function ChatWindow({
   loadingOld,
   hasMore,
   loadOlderMessages,
+  online
 }) {
   const containerRef = useRef(null);
   const shouldAutoScrollRef = useRef(true);
@@ -49,7 +50,7 @@ export function ChatWindow({
 
   return (
     <div className="flex-1 flex flex-col mt-15">
-      <ChatHeader name={activeFriend.fullName} online={true} />
+      <ChatHeader name={activeFriend.fullName} online={online} />
 
       <div
         ref={containerRef}
