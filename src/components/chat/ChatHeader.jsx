@@ -1,7 +1,11 @@
 import { usePresenceStore } from "../../stores/presenceStore";
+import { formatTimeAgo } from "../../utils/dateTimeUtils";
 
 export function ChatHeader({ user }) {
   const isOnline = usePresenceStore((state) => state.isOnline(user?.id));
+  const presence = usePresenceStore((state) => state.getPresence(user?.id));
+
+  console.log(presence);
 
   return (
     <div className="h-16 bg-white flex items-center px-4 gap-3">
@@ -18,7 +22,7 @@ export function ChatHeader({ user }) {
       <div className="flex flex-col">
         <span className="font-semibold leading-tight">{user?.fullName}</span>
         <span className="text-xs text-gray-500">
-          {isOnline ? "Online" : "Offline"}
+          {isOnline ? "Online" : "Offline " + formatTimeAgo(presence?.lastSeenAt)}
         </span>
       </div>
     </div>
