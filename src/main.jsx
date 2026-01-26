@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import { AuthProvider } from "./contexts/AuthProvider.jsx";
 import { ToastProvider } from "./contexts/ToastProvider.jsx";
 import { initAuth } from "./api/http.js";
+import { SignalRProvider } from "./contexts/SignalRProvider.jsx";
 
 initAuth();
 
@@ -13,10 +14,12 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ToastProvider>
-          <App />
-        </ToastProvider>
+        <SignalRProvider>
+          <ToastProvider>
+            <App />
+          </ToastProvider>
+        </SignalRProvider>
       </AuthProvider>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   commentPost,
   deleteComment,
-  getPost,
+  getNewFeedPosts,
   getPostByUserId,
   reactPost,
   updateComment,
@@ -20,8 +20,8 @@ export function FeedList({ userId }) {
   useEffect(() => {
     const fetchPosts = async () => {
       if (!userId) {
-        const res = await getPost();
-        setPost(res.result.data);
+        const res = await getNewFeedPosts();
+        setPost(res.result);
       } else {
         const res = await getPostByUserId(userId);
         setPost(res.result);

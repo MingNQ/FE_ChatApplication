@@ -15,8 +15,7 @@ export default function ChatPage() {
   const [cursor, setCursor] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [loadingOld, setLoadingOld] = useState(false);
-
-  const token = localStorage.getItem("token");
+  const [online, setOnline] = useState(false);
 
   const handleMessageArrived = (message) => {
     setRecentConversation((prev) => {
@@ -39,7 +38,6 @@ export default function ChatPage() {
   };
 
   const { messages, setMessages, sendMessage } = useChat(
-    token,
     activeConversationId,
     handleMessageArrived,
   );
@@ -54,6 +52,12 @@ export default function ChatPage() {
         setMessages(response.result.messages.reverse());
         setCursor(response.result.nextCursor);
         setHasMore(response.result.hasMore);
+        setOnline(() => {
+          const curr = response.result.presences?.find(
+            (p) => p.userId === activeFriend.id,
+          );
+          return curr ? curr.status == 1 : false;
+        });
       } catch (e) {
         console.log(e.message);
       }
@@ -117,6 +121,7 @@ export default function ChatPage() {
           loadingOld={loadingOld}
           hasMore={hasMore}
           loadOlderMessages={(containerRef) => loadOlderMessages(containerRef)}
+          online={online}
         />
       </div>
     </>

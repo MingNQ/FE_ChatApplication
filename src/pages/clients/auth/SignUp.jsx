@@ -64,12 +64,7 @@ export function SignUp() {
 
       if (data.success == true) {
         toast.success(data.result.message);
-        setToken({
-          accessToken: data.result.accessToken,
-          refreshToken: data.result.refreshToken,
-        });
-
-        await login();
+        await login(data.result.accessToken, data.result.refreshToken);
 
         navigate("/", { replace: true });
       } else {

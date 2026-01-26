@@ -9,9 +9,36 @@ import { useToast } from "./hooks/useToast";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import FriendsPage from "./pages/clients/friends/FriendsPage";
 import ProfilePage from "./pages/clients/home/ProfilePage";
+import { useContext, useEffect } from "react";
+import { SignalRContext } from "./contexts/SignalRContext";
 
 function App() {
   const { toasts, removeToast } = useToast();
+  const connection = useContext(SignalRContext);
+
+  useEffect(() => {
+    if (!connection) return;
+
+    const interval = setInterval(() => {
+      connection.invoke("HeartBeat");
+    }, 30000);
+
+    connection.on("UserOnline", (userId) => {
+      // presenceStore.setOnline(userId);
+      console.log("User online:", userId);
+    });
+
+    connection.on("UserOffline", (userId) => {
+      // presenceStore.setOffline(userId);
+      console.log("User offline:", userId);
+    });
+
+    return () => {
+      connection.off("UserOnline");
+      connection.off("UserOffline");
+      clearInterval(interval);
+    };
+  }, [connection]);
 
   return (
     <>
