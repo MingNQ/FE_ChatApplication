@@ -15,8 +15,7 @@ export function ChatWindow({
   onSend,
   loadingOld,
   hasMore,
-  loadOlderMessages,
-  online
+  loadOlderMessages
 }) {
   const containerRef = useRef(null);
   const shouldAutoScrollRef = useRef(true);
@@ -50,7 +49,7 @@ export function ChatWindow({
 
   return (
     <div className="flex-1 flex flex-col mt-15">
-      <ChatHeader name={activeFriend.fullName} online={online} />
+      <ChatHeader user={activeFriend} />
 
       <div
         ref={containerRef}
