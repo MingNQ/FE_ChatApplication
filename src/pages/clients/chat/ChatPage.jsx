@@ -5,6 +5,7 @@ import { ChatWindow } from "../../../components/chat/ChatWindow.jsx";
 import { useAuth } from "../../../hooks/useAuth.js";
 import { getConversations, getMessages } from "../../../api/conversationApi.js";
 import { useChat } from "../../../hooks/useChat.js";
+import { usePresenceStore } from "../../../stores/presenceStore.js";
 
 export default function ChatPage() {
   const { user } = useAuth();
@@ -15,7 +16,7 @@ export default function ChatPage() {
   const [cursor, setCursor] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [loadingOld, setLoadingOld] = useState(false);
-  const [online, setOnline] = useState(false);
+  const setBulk = usePresenceStore((state) => state.setBulk);
 
   const handleMessageArrived = (message) => {
     setRecentConversation((prev) => {
@@ -52,12 +53,7 @@ export default function ChatPage() {
         setMessages(response.result.messages.reverse());
         setCursor(response.result.nextCursor);
         setHasMore(response.result.hasMore);
-        setOnline(() => {
-          const curr = response.result.presences?.find(
-            (p) => p.userId === activeFriend.id,
-          );
-          return curr ? curr.status == 1 : false;
-        });
+        setBulk(response.result.presences);
       } catch (e) {
         console.log(e.message);
       }
@@ -121,7 +117,6 @@ export default function ChatPage() {
           loadingOld={loadingOld}
           hasMore={hasMore}
           loadOlderMessages={(containerRef) => loadOlderMessages(containerRef)}
-          online={online}
         />
       </div>
     </>

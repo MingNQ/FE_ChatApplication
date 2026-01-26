@@ -11,10 +11,13 @@ import FriendsPage from "./pages/clients/friends/FriendsPage";
 import ProfilePage from "./pages/clients/home/ProfilePage";
 import { useContext, useEffect } from "react";
 import { SignalRContext } from "./contexts/SignalRContext";
+import { usePresenceStore } from "./stores/presenceStore";
 
 function App() {
   const { toasts, removeToast } = useToast();
   const connection = useContext(SignalRContext);
+  const setOnline = usePresenceStore((state) => state.setOnline);
+  const setOffline = usePresenceStore((state) => state.setOffline);
 
   useEffect(() => {
     if (!connection) return;
@@ -24,12 +27,12 @@ function App() {
     }, 30000);
 
     connection.on("UserOnline", (userId) => {
-      // presenceStore.setOnline(userId);
+      setOnline(userId);
       console.log("User online:", userId);
     });
 
     connection.on("UserOffline", (userId) => {
-      // presenceStore.setOffline(userId);
+      setOffline(userId);
       console.log("User offline:", userId);
     });
 
