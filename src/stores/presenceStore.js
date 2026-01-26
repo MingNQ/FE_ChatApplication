@@ -33,11 +33,14 @@ export const usePresenceStore = create((set, get) => ({
         next[p.userId] = {
           userId: p.userId,
           status: p.status === 1 ? "online" : "offline",
+          lastSeenAt: p.lastActiveAt,
         };
       });
 
       return { presences: next };
     }),
+
+  getPresence: (userId) => get().presences[userId],
 
   isOnline: (userId) => {
     const p = get().presences[userId];
