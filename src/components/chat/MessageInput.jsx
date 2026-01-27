@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaPaperPlane } from "react-icons/fa";
 
 export function MessageInput({ onSend }) {
   const [text, setText] = useState("");
@@ -20,8 +21,8 @@ export function MessageInput({ onSend }) {
       />
       <button 
         onClick={() => handleSendMessage()}
-        className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600">
-        Send
+        className="px-5 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600">
+        <FaPaperPlane className="text-2xl"/>
       </button>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaPaperPlane } from "react-icons/fa";
 
 export function CommentInput({ post, onSubmit }) {
   const [value, setValue] = useState("");
@@ -19,6 +20,11 @@ export function CommentInput({ post, onSubmit }) {
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         placeholder="Comment..."
         className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm outline-none"
+      />
+
+      <FaPaperPlane
+        className="text-xl hover:text-blue-500 cursor-pointer"
+        onClick={handleSubmit}
       />
     </div>
   );

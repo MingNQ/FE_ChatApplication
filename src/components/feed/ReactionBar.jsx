@@ -1,13 +1,26 @@
 import { FaRegCommentAlt, FaShare } from "react-icons/fa";
 import { ReactionButton } from "./ReactionButton";
+import { getTopReactions, REACTIONS } from "../../utils/reaction";
 
 export function ReactionBar({ post, myReaction, onReact, onOpenComment }) {
+  const topReactions = getTopReactions(post.reactions);
   return (
     <div>
       {(post.reactions.length > 0 || post.comments.length > 0) && (
         <div className="flex justify-between px-4 pt-2 text-sm text-gray-600">
-          <span>{post.reactions.length} reactions</span>
-          <span>
+          <div className="flex items-center">
+            {topReactions.map((value, i) => (
+              <span key={i} className="text-lg -mr-2">
+                {REACTIONS.find((r) => r.value == value).emoji}
+              </span>
+            ))}
+            <span className="ml-3 text-black">{post.reactions.length}</span>
+          </div>
+
+          <span
+            className="hover:text-gray-500 hover:underline cursor-pointer"
+            onClick={onOpenComment}
+          >
             {post.comments.length == 0
               ? "No comment"
               : post.comments.length + " comments"}

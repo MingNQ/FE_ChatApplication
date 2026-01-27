@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPost } from "../../api/feedApi";
+import { FaCamera } from "react-icons/fa";
 
 export function CreatePostModal({ onClose }) {
   const [content, setContent] = useState("");
@@ -43,14 +44,14 @@ export function CreatePostModal({ onClose }) {
       content,
       visibility,
       files: files.map((f) => f.file),
-    }
+    };
     console.log(request);
 
     try {
-        const res = await createPost(request);
-        console.log(res);
+      const res = await createPost(request);
+      console.log(res);
     } catch {
-        alert("Error");
+      alert("Error");
     }
 
     onClose();
@@ -113,8 +114,8 @@ export function CreatePostModal({ onClose }) {
               hidden
               onChange={handleFilesChange}
             />
-            <div className="border rounded-lg p-3 text-center text-gray-600 hover:bg-gray-50">
-              📷 Add photos/videos
+            <div className="flex gap-1 justify-center border rounded-lg p-3 text-center text-gray-600 hover:bg-gray-50">
+              <FaCamera className="text-lg" /> Add photos/videos
             </div>
           </label>
 
@@ -132,7 +133,9 @@ export function CreatePostModal({ onClose }) {
         <div className="p-4 border-t">
           <button
             onClick={handleSubmit}
-            disabled={!content.trim() || (!content.trim() && files.length === 0)}
+            disabled={
+              !content.trim() || (!content.trim() && files.length === 0)
+            }
             className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 disabled:opacity-50"
           >
             Post

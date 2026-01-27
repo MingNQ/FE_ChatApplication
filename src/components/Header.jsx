@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router";
+import { FaComment, FaUserFriends, FaHome, FaBell } from "react-icons/fa";
 import { useAuth } from "../hooks/useAuth";
 
 export function Header() {
@@ -10,86 +11,79 @@ export function Header() {
       <div className="flex-1 flex items-center">
         <Link
           to="/"
-          className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition"
         >
-          My App
+          <img
+            src="images/logo.png"
+            className="w-12 h-12 rounded-full object-fill hover:scale-110 transition"
+          />
         </Link>
       </div>
 
-      <div className="flex-1 flex justify-center">
-        <Link
-          to="/"
-          className="text-gray-700 font-medium hover:text-blue-600 transition"
-        >
-          Home
-        </Link>
-      </div>
+      <div className="flex justify-center items-center">
+        <div className="group w-24 h-15 hover:bg-gray-50 rounded-md place-content-center cursor-pointer">
+          <Link
+            to="/"
+            className="group-hover:text-blue-600 text-gray-700 text-2xl font-medium transition"
+          >
+            <FaHome className="place-self-center" />
+          </Link>
+        </div>
 
-      <div className="flex-1 flex justify-center">
-        <Link
-          to="/chat"
-          className="text-gray-700 font-medium hover:text-blue-600 transition"
-        >
-          Chat
-        </Link>
-      </div>
+        <div className="group w-24 h-15 hover:bg-gray-50 rounded-md place-content-center cursor-pointer">
+          <Link
+            to="/friends"
+            className="group-hover:text-blue-600 text-gray-700 text-2xl font-medium transition"
+          >
+            <FaUserFriends className="place-self-center" />
+          </Link>
+        </div>
 
-      <div className="flex-1 flex justify-center">
-        <Link
-          to="/friends"
-          className="text-gray-700 font-medium hover:text-blue-600 transition"
-        >
-          Friends
-        </Link>
+        <div className="group w-24 h-15 hover:bg-gray-50 rounded-md place-content-center cursor-pointer">
+          <Link
+            to="/chat"
+            className="group-hover:text-blue-600 text-gray-700 text-2xl font-medium transition "
+          >
+            <FaComment className="place-self-center" />
+          </Link>
+        </div>
+
+        <div className="w-24 h-15 text-gray-700 text-2xl font-medium hover:text-blue-600 hover:bg-gray-50 rounded-md place-items-center place-content-center transition cursor-pointer">
+          <FaBell />
+        </div>
       </div>
 
       <div className="flex-1 flex justify-end items-center gap-3">
-        {!user ? (
-          <>
-            <Link
-              to="/sign-in"
-              className="px-4 py-2 rounded-md text-sm font-medium text-blue-600 border border-blue-600 hover:bg-blue-50 transition"
-            >
-              Sign In
-            </Link>
-
-            <Link
-              to="/sign-up"
-              className="px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition"
-            >
-              Sign Up
-            </Link>
-          </>
-        ) : (
-          <>
-            <div className="relative group">
-              <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center cursor-pointer">
-                {user.name?.[0]?.toUpperCase() || "U"}
-              </div>
-
-              <div className="absolute right-0 mt-2 w-45 bg-white border rounded shadow opacity-0 group-hover:opacity-100 transition">
-                <button
-                  onClick={() => {
-                    navigate(`/${user.id}`);
-                  }}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                >
-                  My personal page
-                </button>
-
-                <button
-                  onClick={() => {
-                    logout();
-                    navigate("/sign-in");
-                  }}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                >
-                  Logout
-                </button>
-              </div>
+        <>
+          <div className="relative group">
+            <div className="w-10 h-10 text-white flex items-center justify-center cursor-pointer">
+              <img
+                src={user?.avatar ?? "images/default-avatar.jpg"}
+                className="rounded-full hover:scale-105 transition"
+              />
             </div>
-          </>
-        )}
+
+            <div className="absolute right-0 mt-2 w-45 bg-white border rounded shadow opacity-0 group-hover:opacity-100 transition">
+              <button
+                onClick={() => {
+                  navigate(`/${user.id}`);
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+              >
+                My personal page
+              </button>
+
+              <button
+                onClick={() => {
+                  logout();
+                  navigate("/sign-in");
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </>
       </div>
     </header>
   );

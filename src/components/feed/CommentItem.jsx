@@ -58,7 +58,7 @@ export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
         </div>
       </div>
 
-      <div className="flex mt-1 items-center gap-4 px-11 text-xs text-gray-500">
+      <div className="flex mt-1 ml-1 items-center gap-4 px-11 text-xs text-gray-500">
         <span>{formatTimeAgo(new Date(comment.createdOn))}</span>
 
         {!isEditing && (
