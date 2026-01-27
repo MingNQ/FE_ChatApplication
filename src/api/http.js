@@ -1,4 +1,5 @@
 import axios from "axios";
+import { authStorage } from "../stores/authStore";
 
 const apiBaseUrl = "https://localhost:7187/api/v1";
 
@@ -15,14 +16,12 @@ export function setAuthToken(token) {
 
 export function clearAuth() {
   delete http.defaults.headers.common["Authorization"];
-  localStorage.removeItem("token");
-  localStorage.removeItem("refreshToken");
-  localStorage.removeItem("currentUser");
+  authStorage.clear();
   window.location.href = "/sign-in";
 }
 
 export function initAuth() {
-  const token = localStorage.getItem("token");
+  const token = authStorage.getToken();
   if (token) {
     setAuthToken(token);
   }
@@ -55,26 +54,25 @@ http.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
+        const refreshToken = authStorage.getRefreshToken();
+        console.log(refreshToken);
 
         if (!refreshToken) {
           clearAuth();
           return Promise.reject(error);
         }
 
-        const res = await axios.post(
-          apiBaseUrl + "/tokens/refresh",
-          {
-            accessToken: localStorage.getItem("token"),
-            refreshtoken: refreshToken,
-          }
-        );
+        const res = await axios.post(apiBaseUrl + "/tokens/refresh", {
+          token: authStorage.getToken(),
+          refreshToken: refreshToken,
+        });
 
         const newToken = res.data.token;
         const newRefreshToken = res.data.refreshToken;
 
-        localStorage.setItem("token", newToken);
-        localStorage.setItem("refreshToken", newRefreshToken);
+        const rememberMe = localStorage.getItem("rememberMe") === "true";
+
+        authStorage.setTokens(newToken, newRefreshToken, rememberMe);
 
         setAuthToken(newToken);
         processQueue(null, newToken);
@@ -90,5 +88,5 @@ http.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );

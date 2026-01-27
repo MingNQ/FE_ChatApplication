@@ -9,6 +9,7 @@ import {
 } from "../../../api/authApi";
 import { useAuth } from "../../../hooks/useAuth";
 import { useToast } from "../../../hooks/useToast";
+import { authStorage } from "../../../stores/authStore";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -53,6 +54,7 @@ export function SignIn() {
       if (data.success == true) {
         toast.success(data.result.message);
         await login(data.result.accessToken, data.result.refreshToken);
+        authStorage.setTokens(data.result.accessToken, data.result.refreshToken, remember);
 
         navigate("/", { replace: true });
       } else {
