@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CreatePostModal } from "./CreatePostModal";
+import { FaCamera, FaGrin, FaVideo } from "react-icons/fa";
 
 export default function FeedComposer() {
   const [open, setOpen] = useState(false);
@@ -21,9 +22,15 @@ export default function FeedComposer() {
         />
 
         <div className="flex justify-between mt-3 text-base text-gray-600">
-          <button type="button">📷 Photo</button>
-          <button type="button">🎥 Video</button>
-          <button type="button">😊 Feeling</button>
+          <button type="button" className="flex gap-1 hover:text-blue-500">
+            <FaCamera className="text-xl" /> Photo
+          </button>
+          <button type="button" className="flex gap-1 hover:text-gray-500">
+            <FaVideo className="text-xl" /> Video
+          </button>
+          <button type="button" className="flex gap-1 hover:text-yellow-500">
+            <FaGrin className="text-xl" /> Feeling
+          </button>
         </div>
       </div>
 

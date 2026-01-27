@@ -38,7 +38,6 @@ export function ReactionButton({ myReaction, onReact }) {
       )}
 
       <button
-        onClick={() => onReact(myReaction ?? "LIKE")}
         className={`flex items-center justify-center gap-2 w-full py-2 rounded-lg hover:bg-gray-100 font-medium ${reaction.color}`}
       >
         <span className="text-lg">{reaction.emoji}</span>

@@ -54,7 +54,7 @@ export function ChatWindow({
       <div
         ref={containerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto p-4 flex flex-col gap-2"
+        className="flex-1 overflow-y-auto p-4 flex flex-col gap-1"
       >
         {loadingOld && (
           <div className="text-center text-xs text-gray-400">Loading...</div>
@@ -69,7 +69,7 @@ export function ChatWindow({
           const showDivider = showDate || showTime;
 
           return (
-            <>
+            <div key={index}>
               {showDivider && <DateDivider date={message.sentAt} showDate={showDate}/>}
 
               <MessageRow
@@ -81,7 +81,7 @@ export function ChatWindow({
                   me={activeFriend.id != message.senderId}
                 />
               </MessageRow>
-            </>
+            </div>
           );
         })}
       </div>

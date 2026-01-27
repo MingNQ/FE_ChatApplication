@@ -7,3 +7,18 @@ export const REACTIONS = [
   { value: 5, type: "SAD", label: "Sad", emoji: "😢", color: "text-yellow-500" },
   { value: 6, type: "ANGRY", label: "Angry", emoji: "😡", color: "text-red-600" },
 ];
+
+export function getTopReactions(reactions) {
+  if (!reactions || reactions.length === 0) return [];
+
+  const countMap = {};
+
+  reactions.forEach((r) => {
+    countMap[r.type] = (countMap[r.type] || 0) + 1;
+  });
+
+  return Object.entries(countMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 2)
+    .map(([type]) => type);
+}

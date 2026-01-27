@@ -103,7 +103,7 @@ export default function ChatPage() {
 
       <Header />
 
-      <div className="flex h-[calc(100vh-64px)] bg-gray-100">
+      <div className="flex h-[calc(100vh)] bg-gray-100">
         <ConversationList
           conversations={recentConversations}
           activeFriend={activeFriend}

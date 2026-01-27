@@ -58,7 +58,7 @@ export default function ProfilePage() {
                   <ProfileStats user={user} />
                   <ProfileAbout user={user} className="mt-4" />
                   <div className="bg-white rounded-xl shadow p-4 mt-4">
-                    <h3 className="font-semibold mb-3">Friends</h3>
+                    <h3 className="font-semibold mb-3">{friends.length} Friends</h3>
                     <ProfileFriends friends={friends} variant="compact" />
                   </div>
                   <div className="bg-white rounded-xl shadow p-4 mt-4">
@@ -85,7 +85,7 @@ export default function ProfilePage() {
             {activeTab === "friends" && (
               <div className="col-span-12">
                 <div className="bg-white rounded-xl shadow p-4">
-                  <h3 className="font-semibold mb-3">Friends</h3>
+                  <h3 className="font-semibold mb-3">{friends.length} Friends</h3>
                   <ProfileFriends friends={friends} variant="grid" />
                 </div>
               </div>
