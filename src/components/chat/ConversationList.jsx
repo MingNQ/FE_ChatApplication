@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../hooks/useAuth";
 import { ConversationItem } from "./ConversationItem";
 
@@ -8,15 +9,16 @@ export function ConversationList({
   setCurrentConversation,
 }) {
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <div className="w-80 bg-white flex flex-col mt-16">
-      <div className="p-4 font-semibold text-lg">Chats</div>
+      <div className="p-4 font-semibold text-lg">{t("common.chats")}</div>
 
       <div className="flex-1 overflow-y-auto">
         {conversations.length === 0 && (
           <div className="text-center text-gray-400 mt-10">
-            No any conversation yet.
+            {t("chat.noAnyConversationYet")}
           </div>
         )}
 

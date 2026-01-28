@@ -7,6 +7,7 @@ import { AuthProvider } from "./contexts/AuthProvider.jsx";
 import { ToastProvider } from "./contexts/ToastProvider.jsx";
 import { initAuth } from "./api/http.js";
 import { SignalRProvider } from "./contexts/SignalRProvider.jsx";
+import "./locales/i18n.js";
 
 initAuth();
 

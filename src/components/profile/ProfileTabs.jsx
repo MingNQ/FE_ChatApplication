@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
+
 export function ProfileTabs({ activeTab, setActiveTab }) {
   const tabs = [
-    { key: "posts", label: "Posts" },
-    { key: "photos", label: "Photos" },
-    { key: "friends", label: "Friends" },
+    { key: "posts", label: "common.posts" },
+    { key: "photos", label: "common.photo" },
+    { key: "friends", label: "common.friends" },
   ];
+  const { t } = useTranslation();
 
   return (
     <div className="mt-4 bg-white rounded-xl shadow flex overflow-hidden">
@@ -17,7 +20,7 @@ export function ProfileTabs({ activeTab, setActiveTab }) {
               : "text-gray-500"
           }`}
         >
-          {tab.label}
+          {t(tab.label)}
         </button>
       ))}
     </div>

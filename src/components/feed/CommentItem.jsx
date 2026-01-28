@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { formatTimeAgo } from "../../utils/dateTimeUtils";
+import { useTranslation } from "react-i18next";
 
 export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const [saving, setSaving] = useState(false);
+  const { t } = useTranslation();
 
   const handleSave = async () => {
     if (!editContent.trim()) return;
@@ -63,7 +65,7 @@ export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
 
         {!isEditing && (
           <>
-            <button className="hover:underline">Reply</button>
+            <button className="hover:underline">{t("feed.reply")}</button>
 
             {comment.userId === userId && (
               <>
@@ -71,13 +73,13 @@ export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
                   onClick={() => setIsEditing(true)}
                   className="hover:underline"
                 >
-                  Edit
+                  {t("common.edit")}
                 </button>
                 <button
                   onClick={() => onDelete(post.id, comment.id)}
                   className="hover:text-red-500"
                 >
-                  Delete
+                  {t("common.delete")}
                 </button>
               </>
             )}
@@ -91,10 +93,10 @@ export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
               disabled={saving}
               className="text-blue-600 font-medium hover:underline disabled:opacity-50"
             >
-              Save
+              {t("common.save")}
             </button>
             <button onClick={handleCancel} className="hover:underline">
-              Cancel
+              {t("common.cancel")}
             </button>
           </>
         )}

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { createPost } from "../../api/feedApi";
 import { FaCamera } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export function CreatePostModal({ onClose }) {
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
   const [visibility, setVisibility] = useState(1);
+  const { t } = useTranslation();
 
   const createPreviewFile = (file) => ({
     id: crypto.randomUUID(),
@@ -61,7 +63,7 @@ export function CreatePostModal({ onClose }) {
     <div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-center m-0">
       <div className="bg-white rounded-xl w-full max-w-md shadow-lg">
         <div className="flex justify-between items-center p-4 border-b">
-          <h3 className="font-semibold text-lg">Create post</h3>
+          <h3 className="font-semibold text-lg">{t("feed.createPost")}</h3>
           <button onClick={onClose}>✕</button>
         </div>
 
@@ -69,7 +71,7 @@ export function CreatePostModal({ onClose }) {
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="What's on your mind?"
+            placeholder={t("feed.whatIsOnYourMind")}
             className="w-full resize-none text-lg outline-none"
             rows={4}
           />
@@ -115,7 +117,7 @@ export function CreatePostModal({ onClose }) {
               onChange={handleFilesChange}
             />
             <div className="flex gap-1 justify-center border rounded-lg p-3 text-center text-gray-600 hover:bg-gray-50">
-              <FaCamera className="text-lg" /> Add photos/videos
+              <FaCamera className="text-lg" /> {t("feed.addPhotosOrVideos")}
             </div>
           </label>
 
@@ -124,9 +126,9 @@ export function CreatePostModal({ onClose }) {
             onChange={(e) => setVisibility(e.target.value)}
             className="mt-3 w-full border rounded-lg p-2"
           >
-            <option value="0">🔒 Only me</option>
-            <option value="1">🌍 Public</option>
-            <option value="2">👥 Friends</option>
+            <option value="0">🔒 {t("common.private")}</option>
+            <option value="1">🌍 {t("common.public")}</option>
+            <option value="2">👥 {t("common.friends")}</option>
           </select>
         </div>
 
@@ -136,9 +138,9 @@ export function CreatePostModal({ onClose }) {
             disabled={
               !content.trim() || (!content.trim() && files.length === 0)
             }
-            className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 disabled:opacity-50"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-500 disabled:opacity-50"
           >
-            Post
+            {t("feed.createPost")}
           </button>
         </div>
       </div>

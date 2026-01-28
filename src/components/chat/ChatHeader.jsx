@@ -1,9 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { usePresenceStore } from "../../stores/presenceStore";
-import { formatTimeAgo } from "../../utils/dateTimeUtils";
 
 export function ChatHeader({ user }) {
   const isOnline = usePresenceStore((state) => state.isOnline(user?.id));
-  const presence = usePresenceStore((state) => state.getPresence(user?.id));
+  const { t } = useTranslation();
 
   return (
     <div className="h-16 bg-white flex items-center px-4 gap-3">
@@ -24,8 +24,8 @@ export function ChatHeader({ user }) {
         <span className="font-semibold leading-tight">{user?.fullName}</span>
         <span className="text-xs text-gray-500">
           {isOnline
-            ? "Online"
-            : "Offline " + formatTimeAgo(presence?.lastSeenAt)}
+            ? t("common.online")
+            : t("common.offline")}
         </span>
       </div>
     </div>

@@ -10,6 +10,7 @@ import { ProfilePosts } from "../../../components/profile/ProfilePosts";
 import { useParams } from "react-router";
 import { getFriendByUserId, getUserById } from "../../../api/userApi";
 import { useAuth } from "../../../hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 export default function ProfilePage() {
   const { user: currentUser } = useAuth();
@@ -19,6 +20,7 @@ export default function ProfilePage() {
   const [isMe, setIsMe] = useState(false);
   const [isFriend, setIsFriend] = useState(false);
   const [friends, setFriends] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!userId || !currentUser) return;
@@ -58,11 +60,13 @@ export default function ProfilePage() {
                   <ProfileStats user={user} />
                   <ProfileAbout user={user} className="mt-4" />
                   <div className="bg-white rounded-xl shadow p-4 mt-4">
-                    <h3 className="font-semibold mb-3">{friends.length} Friends</h3>
+                    <h3 className="font-semibold mb-3">
+                      {friends.length} {t("common.friends")}
+                    </h3>
                     <ProfileFriends friends={friends} variant="compact" />
                   </div>
                   <div className="bg-white rounded-xl shadow p-4 mt-4">
-                    <h3 className="font-semibold mb-3">Photos</h3>
+                    <h3 className="font-semibold mb-3">{t("common.photo")}</h3>
                     <ProfilePhotos />
                   </div>
                 </aside>
@@ -77,7 +81,7 @@ export default function ProfilePage() {
             {activeTab === "photos" && (
               <div className="col-span-12">
                 <div className="bg-white rounded-xl shadow p-4">
-                  <h3 className="font-semibold mb-3">Photos</h3>
+                  <h3 className="font-semibold mb-3">{t("common.photo")}</h3>
                   <ProfilePhotos />
                 </div>
               </div>
@@ -85,7 +89,9 @@ export default function ProfilePage() {
             {activeTab === "friends" && (
               <div className="col-span-12">
                 <div className="bg-white rounded-xl shadow p-4">
-                  <h3 className="font-semibold mb-3">{friends.length} Friends</h3>
+                  <h3 className="font-semibold mb-3">
+                    {friends.length} {t("common.friends")}
+                  </h3>
                   <ProfileFriends friends={friends} variant="grid" />
                 </div>
               </div>

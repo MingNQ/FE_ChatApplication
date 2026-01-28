@@ -1,0 +1,69 @@
+{
+    "common": {
+        "myPersonalPage": "My personal page",
+        "logout": "Logout",
+        "photo": "Photos",
+        "video": "Video",
+        "feeling": "Feeling",
+        "comments": "Comments",
+        "share": "Share",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "private": "Private",
+        "friends": "Friends",
+        "public": "Public",
+        "posts": "Posts",
+        "followers": "Followers",
+        "direct": "Direct",
+        "editProfile": "Edit Profile",
+        "addFriend": "Add friend",
+        "peopleYouMayKnow": "People you may know",
+        "friendRequests": "Friend requests",
+        "loading": "Loading...",
+        "accept": "Accept",
+        "reject": "Reject",
+        "pending": "Pending",
+        "chats": "Chats",
+        "online": "Online",
+        "offline": "Offline"
+    },
+
+    "feed": {
+        "whatIsOnYourMind": "What's on your mind?",
+        "noComment": "No comment",
+        "comment": "Comment...",
+        "postOf": "Post of",
+        "reply": "Reply",
+        "createPost": "Create Post",
+        "addPhotosOrVideos": "Add photos/videos"
+    },
+    
+    "chat": {
+        "noAnyConversationYet": "No any conversation yet."
+    },
+
+    "reaction": {
+        "like": "Like",
+        "love": "Love",
+        "haha": "Haha",
+        "wow": "Wow",
+        "sad": "Sad",
+        "angry": "Angry"
+    },
+
+    "auth": {
+        "signIn": "SignIn",
+        "signUp": "SignUp",
+        "emailOrPhone": "Email or Phone",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "rememberMe": "Remember me",
+        "noAccountYet": "No account yet?",
+        "haveAccountYet": "Have account yet?",
+        "verifyOtp": "Verify OTP",
+        "resendOtp": "Resend OTP",
+        "passwordNotMatch": "Passwords do not match. Please try again!"
+    }
+}
