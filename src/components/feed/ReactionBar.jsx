@@ -1,9 +1,12 @@
 import { FaRegCommentAlt, FaShare } from "react-icons/fa";
 import { ReactionButton } from "./ReactionButton";
 import { getTopReactions, REACTIONS } from "../../utils/reaction";
+import { useTranslation } from "react-i18next";
 
 export function ReactionBar({ post, myReaction, onReact, onOpenComment }) {
   const topReactions = getTopReactions(post.reactions);
+  const { t } = useTranslation();
+
   return (
     <div>
       {(post.reactions.length > 0 || post.comments.length > 0) && (
@@ -22,8 +25,8 @@ export function ReactionBar({ post, myReaction, onReact, onOpenComment }) {
             onClick={onOpenComment}
           >
             {post.comments.length == 0
-              ? "No comment"
-              : post.comments.length + " comments"}
+              ? t("feed.noComment")
+              : post.comments.length + " " + t("common.comments")}
           </span>
         </div>
       )}
@@ -36,10 +39,10 @@ export function ReactionBar({ post, myReaction, onReact, onOpenComment }) {
 
         <ActionButton
           icon={<FaRegCommentAlt />}
-          label="Comment"
+          label={t("common.comments")}
           onClick={onOpenComment}
         />
-        <ActionButton icon={<FaShare />} label="Share" />
+        <ActionButton icon={<FaShare />} label={t("common.share")} />
       </div>
     </div>
   );

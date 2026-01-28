@@ -1,17 +1,18 @@
 import { Link, useNavigate } from "react-router";
 import { FaComment, FaUserFriends, FaHome, FaBell } from "react-icons/fa";
 import { useAuth } from "../hooks/useAuth";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <header className="fixed top-0 left-0 right-0 h-16 px-6 flex items-center bg-white border-b border-gray-200 z-50">
       <div className="flex-1 flex items-center">
-        <Link
-          to="/"
-        >
+        <Link to="/">
           <img
             src="images/logo.png"
             className="w-12 h-12 rounded-full object-fill hover:scale-110 transition"
@@ -54,6 +55,8 @@ export function Header() {
 
       <div className="flex-1 flex justify-end items-center gap-3">
         <>
+          <LanguageSwitcher />
+
           <div className="relative group">
             <div className="w-10 h-10 text-white flex items-center justify-center cursor-pointer">
               <img
@@ -69,7 +72,7 @@ export function Header() {
                 }}
                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
               >
-                My personal page
+                {t("common.myPersonalPage")}
               </button>
 
               <button
@@ -79,7 +82,7 @@ export function Header() {
                 }}
                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
               >
-                Logout
+                {t("common.logout")}
               </button>
             </div>
           </div>

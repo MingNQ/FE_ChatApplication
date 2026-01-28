@@ -10,6 +10,7 @@ import {
 import { useAuth } from "../../../hooks/useAuth";
 import { useToast } from "../../../hooks/useToast";
 import { authStorage } from "../../../stores/authStore";
+import { useTranslation } from "react-i18next";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ export function SignIn() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -54,7 +56,11 @@ export function SignIn() {
       if (data.success == true) {
         toast.success(data.result.message);
         await login(data.result.accessToken, data.result.refreshToken);
-        authStorage.setTokens(data.result.accessToken, data.result.refreshToken, remember);
+        authStorage.setTokens(
+          data.result.accessToken,
+          data.result.refreshToken,
+          remember,
+        );
 
         navigate("/", { replace: true });
       } else {
@@ -87,7 +93,9 @@ export function SignIn() {
       <title>Sign In</title>
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="w-full max-w-md bg-white p-6 rounded-lg shadow">
-          <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
+          <h2 className="text-2xl font-semibold text-center mb-6">
+            {t("auth.signIn")}
+          </h2>
 
           {error && (
             <div className="mb-4 text-sm text-red-600 bg-red-50 p-2 rounded">
@@ -99,7 +107,7 @@ export function SignIn() {
             <>
               <form onSubmit={handleLogin} className="space-y-4">
                 <input
-                  placeholder="Email or Phone"
+                  placeholder={t("auth.emailOrPhone")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full border px-3 py-2 rounded"
@@ -108,7 +116,7 @@ export function SignIn() {
                 <PasswordInput
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password"
+                  placeholder={t("password")}
                 />
 
                 <label className="flex items-center gap-2 text-sm">
@@ -117,18 +125,18 @@ export function SignIn() {
                     checked={remember}
                     onChange={(e) => setRemember(e.target.checked)}
                   />
-                  Remember me
+                  {t("auth.rememberMe")}
                 </label>
 
                 <button className="w-full bg-blue-600 text-white py-2 rounded">
-                  Sign In
+                  {t("auth.signIn")}
                 </button>
               </form>
 
               <p className="text-sm text-center mt-4">
-                No account yet?{" "}
+                {t("auth.noAccountYet")}{" "}
                 <Link to="/sign-up" className="text-blue-600">
-                  Sign Up
+                  {t("auth.signUp")}
                 </Link>
               </p>
             </>
@@ -140,7 +148,7 @@ export function SignIn() {
                   onClick={handleVerifyOtp}
                   className="w-full bg-blue-600 text-white py-2 rounded"
                 >
-                  Verify OTP
+                  {t("auth.verifyOtp")}
                 </button>
               </div>
 
@@ -148,7 +156,7 @@ export function SignIn() {
                 onClick={handleResendOtp}
                 className="text-sm text-center mt-4 text-blue-600"
               >
-                Resend OTP
+                {t("auth.resendOtp")}
               </button>
             </>
           )}

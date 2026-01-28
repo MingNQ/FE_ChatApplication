@@ -12,10 +12,12 @@ import {
 } from "../../../api/friendshipRequestApi";
 import { useAuth } from "../../../hooks/useAuth";
 import { useToast } from "../../../hooks/useToast";
+import { useTranslation } from "react-i18next";
 
 export default function FriendsPage() {
   const currentUser = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const [requested, setRequested] = useState([]);
   const [received, setReceived] = useState([]);
@@ -74,17 +76,17 @@ export default function FriendsPage() {
 
   return (
     <>
-      <title>Friends</title>
+      <title>{t("common.friends")}</title>
 
       <Header />
 
       <main className="pt-20 px-6 max-w-6xl mx-auto">
         <section className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-            People you may know
+            {t("common.peopleYouMayKnow")}
           </h1>
 
-          {loading && <p className="text-gray-500">Loading users...</p>}
+          {loading && <p className="text-gray-500">{t("common.loading")}</p>}
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {data?.map((user) => (
@@ -100,10 +102,10 @@ export default function FriendsPage() {
 
         <section className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-            Friend Requests
+            {t("common.friendRequests")}
           </h1>
 
-          {loading && <p className="text-gray-500">Loading users...</p>}
+          {loading && <p className="text-gray-500">{t("common.loading")}</p>}
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {userSend?.map((u) => (
@@ -119,7 +121,7 @@ export default function FriendsPage() {
         </section>
 
         <section>
-          <h1 className="text-2xl font-semibold mb-6">Friends</h1>
+          <h1 className="text-2xl font-semibold mb-6">{t("common.friends")}</h1>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {friends.map((friend) => (

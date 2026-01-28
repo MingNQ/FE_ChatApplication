@@ -1,0 +1,69 @@
+{
+    "common": {
+        "myPersonalPage": "Trang cá nhân",
+        "logout": "Đăng xuất",
+        "photo": "Ảnh",
+        "video": "Video",
+        "feeling": "Cảm xúc",
+        "comments": "Bình luận",
+        "share": "Chia sẻ",
+        "edit": "Sửa",
+        "delete": "Xóa",
+        "save": "Lưu",
+        "cancel": "Hủy",
+        "private": "Riêng tư",
+        "friends": "Bạn bè",
+        "public": "Công khai",
+        "posts": "Bài viết",
+        "followers": "Người theo dõi",
+        "direct": "Nhắn tin",
+        "editProfile": "Sửa trang cá nhân",
+        "addFriend": "Thêm bạn",
+        "peopleYouMayKnow": "Bạn có thể biết",
+        "friendRequests": "Yêu cầu kết bạn",
+        "loading": "Đang tải...",
+        "accept": "Chấp nhận",
+        "reject": "Từ chối",
+        "pending": "Đang chờ",
+        "chats": "Cuộc trò chuyện",
+        "online": "Trực tuyến",
+        "offline": "Ngoại tuyến"
+    },
+
+    "feed": {
+        "whatIsOnYourMind": "Bạn đang nghĩ gì?",
+        "noComment": "Chưa có bình luận",
+        "comment": "Bình luận...",
+        "postOf": "Bài viết của",
+        "reply": "Phản hồi",
+        "createPost": "Tạo bài đăng",
+        "addPhotosOrVideos": "Thêm ảnh/video"
+    },
+
+    "chat": {
+        "noAnyConversationYet": "Chưa có cuộc trò chuyện."
+    },
+
+    "reaction": {
+        "like": "Thích",
+        "love": "Yêu thích",
+        "haha": "Haha",
+        "wow": "Wow",
+        "sad": "Buồn",
+        "angry": "Phẫn nộ"
+    },
+
+    "auth": {
+        "signIn": "Đăng nhập",
+        "signUp": "Đăng ký",
+        "emailOrPhone": "Email hoặc SĐT",
+        "password": "Mật khẩu",
+        "confirmPassword": "Nhập lại mật khẩu",
+        "rememberMe": "Lưu đăng nhập",
+        "noAccountYet": "Chưa có tài khoản?",
+        "haveAccountYet": "Đã có tài khoản?",
+        "verifyOtp": "Xác minh OTP",
+        "resendOtp": "Gửi lại OTP",
+        "passwordNotMatch": "Mật khẩu không khớp. Vui lòng thử lại!"
+    }
+}

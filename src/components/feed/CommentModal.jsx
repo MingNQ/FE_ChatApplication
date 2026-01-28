@@ -4,6 +4,7 @@ import { PostContent } from "./PostContent";
 import { CommentList } from "./CommentList";
 import { CommentInput } from "./CommentInput";
 import { ReactionBar } from "./ReactionBar";
+import { useTranslation } from "react-i18next";
 
 export function CommentModal({
   post,
@@ -15,11 +16,13 @@ export function CommentModal({
   onDelete,
   onEdit,
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-center">
       <div className="bg-white w-full max-w-xl rounded-xl shadow-lg max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between px-4 py-3 border-b border-b-gray-200">
-          <span className="font-semibold">Post's {post.author?.fullName}</span>
+          <span className="font-semibold">{t("feed.postOf")} {post.author?.fullName}</span>
           <button onClick={onClose}>
             <FaTimes />
           </button>

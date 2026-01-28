@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import { ReactionPopup } from "./ReactionPopUp";
 import { REACTIONS } from "../../utils/reaction";
+import { useTranslation } from "react-i18next";
 
 export function ReactionButton({ myReaction, onReact }) {
   const [open, setOpen] = useState(false);
   const closeTimeout = useRef(null);
+  const { t } = useTranslation();
 
   const reaction = myReaction
     ? REACTIONS.find((r) => r.value === myReaction.type) || REACTIONS[0]
@@ -41,7 +43,7 @@ export function ReactionButton({ myReaction, onReact }) {
         className={`flex items-center justify-center gap-2 w-full py-2 rounded-lg hover:bg-gray-100 font-medium ${reaction.color}`}
       >
         <span className="text-lg">{reaction.emoji}</span>
-        <span>{reaction.label}</span>
+        <span>{t(reaction.label)}</span>
       </button>
     </div>
   );

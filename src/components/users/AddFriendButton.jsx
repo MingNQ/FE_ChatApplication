@@ -1,4 +1,8 @@
+import { useTranslation } from "react-i18next";
+
 export function AddFriendButton({ isRequested, onAdd }) {
+  const { t } = useTranslation();
+
   return (
     <button
       disabled={isRequested}
@@ -10,7 +14,7 @@ export function AddFriendButton({ isRequested, onAdd }) {
             : "bg-blue-600 text-white hover:bg-blue-700"
         }`}
     >
-      {isRequested ? "Pending" : "Add Friend"}
+      {isRequested ? t("common.pending") : t("common.addFriend")}
     </button>
   );
 }

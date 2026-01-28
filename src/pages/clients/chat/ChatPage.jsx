@@ -6,6 +6,7 @@ import { useAuth } from "../../../hooks/useAuth.js";
 import { getConversations, getMessages } from "../../../api/conversationApi.js";
 import { useChat } from "../../../hooks/useChat.js";
 import { usePresenceStore } from "../../../stores/presenceStore.js";
+import { useTranslation } from "react-i18next";
 
 export default function ChatPage() {
   const { user } = useAuth();
@@ -17,6 +18,7 @@ export default function ChatPage() {
   const [hasMore, setHasMore] = useState(true);
   const [loadingOld, setLoadingOld] = useState(false);
   const setBulk = usePresenceStore((state) => state.setBulk);
+  const { t } = useTranslation();
 
   const handleMessageArrived = (message) => {
     setRecentConversation((prev) => {
@@ -99,7 +101,7 @@ export default function ChatPage() {
 
   return (
     <>
-      <title>Chat</title>
+      <title>{t("common.chats")}</title>
 
       <Header />
 

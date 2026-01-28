@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaPaperPlane } from "react-icons/fa";
 
 export function CommentInput({ post, onSubmit }) {
   const [value, setValue] = useState("");
+  const { t } = useTranslation();
 
   const handleSubmit = () => {
     if (!value.trim()) return;
@@ -18,7 +20,7 @@ export function CommentInput({ post, onSubmit }) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-        placeholder="Comment..."
+        placeholder={t("feed.comment")}
         className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm outline-none"
       />
 
