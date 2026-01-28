@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 import { SignalRContext } from "./SignalRContext";
 import { useAuth } from "../hooks/useAuth";
@@ -23,7 +23,8 @@ export function SignalRProvider({ children }) {
       .withAutomaticReconnect()
       .build();
 
-    hub.start()
+    hub
+      .start()
       .then(() => {
         setConnection(hub);
       })
@@ -32,8 +33,10 @@ export function SignalRProvider({ children }) {
       });
 
     return () => {
-      hub.stop();
-      setConnection(null);
+      if (hub.state === signalR.HubConnectionState.Connected) {
+        hub.stop();
+        setConnection(null);
+      }
     };
   }, [token]);
 

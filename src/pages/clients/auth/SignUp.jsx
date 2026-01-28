@@ -6,10 +6,10 @@ import {
   inititateSignUp,
   verifySignUp,
   resendSignUpOtp,
-  setToken,
 } from "../../../api/authApi";
 import { useAuth } from "../../../hooks/useAuth";
 import { useToast } from "../../../hooks/useToast";
+import { useTranslation } from "react-i18next";
 
 export function SignUp() {
   const [form, setForm] = useState({});
@@ -18,6 +18,7 @@ export function SignUp() {
   const [otp, setOtp] = useState("");
   const [verificationId, setVerificationId] = useState(0);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { login } = useAuth();
   const { toast } = useToast();
@@ -94,11 +95,11 @@ export function SignUp() {
 
   return (
     <>
-      <title>Sign Up</title>
+      <title>{t("auth.signUp")}</title>
 
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="w-full max-w-md bg-white p-6 rounded-lg shadow">
-          <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+          <h2 className="text-2xl font-semibold text-center mb-6">{t("auth.signUp")}</h2>
 
           {error && (
             <div className="mb-4 text-sm text-red-600 bg-red-50 p-2 rounded">
@@ -112,13 +113,13 @@ export function SignUp() {
                 <div className="flex gap-2">
                   <input
                     name="firstName"
-                    placeholder="First Name"
+                    placeholder={t("auth.firstName")}
                     onChange={handleChange}
                     className="w-1/2 border px-3 py-2 rounded"
                   />
                   <input
                     name="lastName"
-                    placeholder="Last Name"
+                    placeholder={t("auth.lastName")}
                     onChange={handleChange}
                     className="w-1/2 border px-3 py-2 rounded"
                   />
@@ -126,14 +127,14 @@ export function SignUp() {
 
                 <input
                   name="email"
-                  placeholder="Email or Phone"
+                  placeholder={t("auth.emailOrPhone")}
                   onChange={handleChange}
                   className="w-full border px-3 py-2 rounded"
                 />
 
                 <PasswordInput
                   key={0}
-                  placeholder="Password"
+                  placeholder={t("auth.password")}
                   value={form.password || ""}
                   onChange={handleChange}
                   name="password"
@@ -141,21 +142,21 @@ export function SignUp() {
 
                 <PasswordInput
                   key={1}
-                  placeholder="Confirm Password"
+                  placeholder={t("auth.confirmPassword")}
                   value={form.confirmPassword || ""}
                   onChange={handleChange}
                   name="confirmPassword"
                 />
 
                 <button className="w-full bg-blue-600 text-white py-2 rounded">
-                  Sign Up
+                  {t("auth.signUp")}
                 </button>
               </form>
 
               <p className="text-sm text-center mt-4">
-                Have account yet?{" "}
+                {t("auth.haveAccountYet")}{" "}
                 <Link to="/sign-in" className="text-blue-600">
-                  Sign In
+                  {t("auth.signIn")}
                 </Link>
               </p>
             </>

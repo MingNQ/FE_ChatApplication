@@ -54,8 +54,10 @@
     },
 
     "auth": {
-        "signIn": "SignIn",
-        "signUp": "SignUp",
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "firstName": "First Name",
+        "lastName": "Last Name",
         "emailOrPhone": "Email or Phone",
         "password": "Password",
         "confirmPassword": "Confirm password",
