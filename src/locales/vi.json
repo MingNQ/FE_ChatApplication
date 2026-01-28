@@ -56,6 +56,8 @@
     "auth": {
         "signIn": "Đăng nhập",
         "signUp": "Đăng ký",
+        "firstName": "Họ",
+        "lastName": "Tên",
         "emailOrPhone": "Email hoặc SĐT",
         "password": "Mật khẩu",
         "confirmPassword": "Nhập lại mật khẩu",

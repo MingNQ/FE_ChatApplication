@@ -116,7 +116,7 @@ export function SignIn() {
                 <PasswordInput
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder={t("password")}
+                  placeholder={t("auth.password")}
                 />
 
                 <label className="flex items-center gap-2 text-sm">
