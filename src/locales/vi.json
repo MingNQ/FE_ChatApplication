@@ -27,7 +27,11 @@
         "pending": "Đang chờ",
         "chats": "Cuộc trò chuyện",
         "online": "Trực tuyến",
-        "offline": "Ngoại tuyến"
+        "offline": "Ngoại tuyến",
+        "recent": "Vừa xong",
+        "minutesAgo": "phút trước",
+        "hoursAgo": "giờ trước",
+        "dayAgo": "ngày trước"
     },
 
     "feed": {
@@ -37,7 +41,9 @@
         "postOf": "Bài viết của",
         "reply": "Phản hồi",
         "createPost": "Tạo bài đăng",
-        "addPhotosOrVideos": "Thêm ảnh/video"
+        "addPhotosOrVideos": "Thêm ảnh/video",
+        "seeMore": "Xem thêm",
+        "seeLess": "Thu gọn"
     },
 
     "chat": {

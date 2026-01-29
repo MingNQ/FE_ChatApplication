@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function PostContent({ content }) {
   const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation();
 
   const renderText = () => {
     return content.split(/\s+/).map((word, i) => {
@@ -12,9 +14,9 @@ export function PostContent({ content }) {
             href={word}
             target="_blank"
             rel="noreferrer"
-            className="text-blue-500 hover:underline mr-1"
+            className="text-blue-500 hover:underline break-words"
           >
-            {word}
+            {word + " "}
           </a>
         );
       }
@@ -27,24 +29,26 @@ export function PostContent({ content }) {
         );
       }
 
-      return (
-        <span key={i} className="mr-1">
-          {word}
-        </span>
-      );
+      return <span key={i}>{word + " "}</span>;
     });
   };
 
   return (
-    <div className="flex px-4 pb-2 text-gray-800 text-sm leading-relaxed">
-      <div className={expanded ? "" : "line-clamp-4"}>{renderText()}</div>
+    <div className="flex flex-col px-4 pb-2 text-gray-800 text-sm leading-relaxed">
+      <div
+        className={`text-justify whitespace-normal break-words ${
+          expanded ? "" : "line-clamp-4"
+        }`}
+      >
+        {renderText()}
+      </div>
 
       {content.length > 250 && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="mt-1 text-blue-500 text-sm hover:underline"
+          className="mt-1 text-blue-500 text-sm hover:underline self-start"
         >
-          {expanded ? "See less" : "See more"}
+          {expanded ? t("feed.seeLess") : t("feed.seeMore")}
         </button>
       )}
     </div>

@@ -22,7 +22,7 @@ export async function createPost(request) {
   const res = await http.post("/client/posts", {
     content: request.content,
     visibility: request.visibility,
-    attachmentIds: request.attachmentIds,
+    attachmentIds: request.attachments,
   });
 
   return res.data;

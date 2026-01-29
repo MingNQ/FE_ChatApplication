@@ -25,7 +25,7 @@ export function ReactionBar({ post, myReaction, onReact, onOpenComment }) {
             onClick={onOpenComment}
           >
             {post.comments.length == 0
-              ? t("feed.noComment")
+              ? ""
               : post.comments.length + " " + t("common.comments")}
           </span>
         </div>
