@@ -35,7 +35,7 @@ export function FeedList({ userId }) {
     const post = posts.find((p) => p.id === postId);
     if (!post) return;
 
-    const myReaction = post.reactions.find((r) => r.userId === user.id);
+    const myReaction = post.reactions.find((r) => r.userId === user?.id);
 
     let res;
 

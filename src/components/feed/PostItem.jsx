@@ -20,7 +20,7 @@ export function PostItem({
     <div className="bg-white rounded-xl shadow">
       <PostHeader post={post} />
       <PostContent content={post.content} />
-      <PostMedia media={post.media} />
+      <PostMedia media={post.attachments} />
       <ReactionBar
         post={post}
         myReaction={myReaction}

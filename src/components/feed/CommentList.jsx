@@ -1,10 +1,13 @@
+import { useTranslation } from "react-i18next";
 import { CommentItem } from "./CommentItem";
 
 export function CommentList({ post, userId, comments, onDelete, onEdit }) {
+  const { t } = useTranslation();
+
   if (!comments || comments.length === 0) {
     return (
       <div className="text-center text-gray-500 py-8 text-sm border-t border-t-gray-200">
-        No comments yet.
+        {t("feed.noComment")}
       </div>
     );
   }

@@ -23,16 +23,17 @@ npm run build
 
 Top-level layout of the repository (key folders and files):
 
-- **src/**: application source code
-	- **api/**: API client modules (e.g., `authApi.js`, `conversationApi.js`, `userApi.js`)
-	- **components/**: reusable UI components, grouped by feature (chat, feed, profile, users)
-	- **contexts/**: React context providers (`AuthProvider`, `SignalRProvider`, `ToastProvider`)
-	- **hooks/**: custom hooks (`useAuth`, `useChat`, `useToast`)
-	- **pages/**: route pages organized by client/admin and feature areas (auth, chat, home, friends)
-	- **realtime/**: SignalR hub client (`chatHub.js`) used for live messaging
-	- **utils/**: utility helpers (query builders, datetime, reactions)
-- **public/**: static assets and images
-- **index.html**, **package.json**, **vite.config.js**, **eslint.config.js**: build and tooling config
+```
+├── src
+│   ├── api/			API client modules (e.g., `authApi.js`, `conversationApi.js`, `userApi.js`)
+│   ├── components/		reusable UI components, grouped by feature (chat, feed, profile, users)
+│   ├── contexts/		React context providers (`AuthProvider`, `SignalRProvider`, `ToastProvider`)
+│   ├── hooks/			Custom hooks (`useAuth`, `useChat`, `useToast`)
+│   ├── locales/		Internationalization configure
+│   ├── pages/			Route pages organized by client/admin and feature areas (auth, chat, home, friends)
+│   ├── realtime/		SignalR hub client (`chatHub.js`) used for live messaging
+│   ├── utils/			Utility helpers (query builders, datetime, reactions)
+```
 
 See the `src/components` tree for feature-level organization: `chat/`, `feed/`, `profile/`, `users/`.
 
@@ -43,6 +44,7 @@ See the `src/components` tree for feature-level organization: `chat/`, `feed/`, 
 - **Profiles & Friends**: view user profiles, friend lists, send/accept/reject requests.
 - **Authentication**: sign-in and sign-up flows with client-side auth context and API integration.
 - **Notifications & Toasts**: global toast provider for in-app notifications and feedback.
+- **Mutilanguage**: support multilanguage VIE/ENG.
 
 ## Development notes
 
@@ -55,7 +57,6 @@ See the `src/components` tree for feature-level organization: `chat/`, `feed/`, 
 - Add end-to-end and unit tests (Jest + React Testing Library)
 - CI/CD pipeline with linting, tests, and preview deployments
 - Improve accessibility (a11y) and keyboard navigation across components
-- Add i18n support and localisation
 - Mobile-responsive improvements and a lightweight PWA shell
 - Performance tuning: code-splitting, lazy-loading, image optimization
 - Security hardening: stricter input validation and content sanitization on the client

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createPost } from "../../api/feedApi";
 import { FaCamera } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { uploadMultipleFile } from "../../api/uploadFileApi";
 
 export function CreatePostModal({ onClose }) {
   const [content, setContent] = useState("");
@@ -9,17 +10,10 @@ export function CreatePostModal({ onClose }) {
   const [visibility, setVisibility] = useState(1);
   const { t } = useTranslation();
 
-  const createPreviewFile = (file) => ({
-    id: crypto.randomUUID(),
-    file,
-    url: URL.createObjectURL(file),
-    type: file.type.startsWith("video") ? "video" : "image",
-  });
-
-  const handleFilesChange = (e) => {
+  const handleFilesChange = async (e) => {
     const selectedFiles = Array.from(e.target.files);
-
-    const previews = selectedFiles.map(createPreviewFile);
+    const response = await uploadMultipleFile(selectedFiles);
+    const previews = response.result;
 
     setFiles((prev) => [...prev, ...previews]);
     e.target.value = "";
@@ -28,14 +22,14 @@ export function CreatePostModal({ onClose }) {
   const removeFile = (id) => {
     setFiles((prev) => {
       const file = prev.find((f) => f.id === id);
-      if (file) URL.revokeObjectURL(file.url);
+      if (file) URL.revokeObjectURL(file.fullPathUrl);
       return prev.filter((f) => f.id !== id);
     });
   };
 
   useEffect(() => {
     return () => {
-      files.forEach((f) => URL.revokeObjectURL(f.url));
+      files.forEach((f) => URL.revokeObjectURL(f.fullPathUrl));
     };
   }, [files]);
 
@@ -44,8 +38,8 @@ export function CreatePostModal({ onClose }) {
 
     const request = {
       content,
-      visibility,
-      files: files.map((f) => f.file),
+      visibility: Number(visibility),
+      attachments: files.map((f) => f.id),
     };
     console.log(request);
 
@@ -83,15 +77,15 @@ export function CreatePostModal({ onClose }) {
                   key={item.id}
                   className="relative rounded-lg overflow-hidden"
                 >
-                  {item.type === "image" ? (
+                  {item.type.startsWith("image") ? (
                     <img
-                      src={item.url}
+                      src={item.fullPathUrl}
                       className="w-full h-32 object-cover"
                       alt=""
                     />
                   ) : (
                     <video
-                      src={item.url}
+                      src={item.fullPathUrl}
                       controls
                       className="w-full h-32 object-cover"
                     />
@@ -126,9 +120,9 @@ export function CreatePostModal({ onClose }) {
             onChange={(e) => setVisibility(e.target.value)}
             className="mt-3 w-full border rounded-lg p-2"
           >
-            <option value="0">🔒 {t("common.private")}</option>
-            <option value="1">🌍 {t("common.public")}</option>
-            <option value="2">👥 {t("common.friends")}</option>
+            <option value="1">🔒 {t("common.private")}</option>
+            <option value="2">🌍 {t("common.public")}</option>
+            <option value="3">👥 {t("common.friends")}</option>
           </select>
         </div>
 
