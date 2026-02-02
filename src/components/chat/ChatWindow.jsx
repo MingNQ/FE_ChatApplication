@@ -62,10 +62,8 @@ export function ChatWindow({
 
         {messages.map((message, index) => {
           const prev = messages[index - 1];
-
           const showDate = shouldShowDateDivider(message, prev);
           const showTime = shouldShowTimeDivider(message, prev);
-
           const showDivider = showDate || showTime;
 
           return (
@@ -85,30 +83,34 @@ export function ChatWindow({
                   />
                 </MessageRow>
               )}
-              
+
               {message.attachments?.length > 0 && (
                 <MessageRow me={activeFriend.id !== message.senderId}>
                   <div className="grid gap-2 mt-3">
-                    {message.attachments.map((item) => (
-                      <div
-                        key={item.id}
-                        className="relative rounded-lg overflow-hidden"
-                      >
-                        {item.fileStorage.type.startsWith("image") ? (
-                          <img
-                            src={item.fileStorage.fullPathUrl}
-                            className="w-full max-w-80 h-full object-cover"
-                            alt=""
-                          />
-                        ) : (
-                          <video
-                            src={item.fileStorage.fullPathUrl}
-                            controls
-                            className="w-full max-w-80 h-full object-cover"
-                          />
-                        )}
-                      </div>
-                    ))}
+                    {message.attachments.map((item) => {
+                      const file = item.fileStorage ?? item;
+
+                      return (
+                        <div
+                          key={item.id}
+                          className="relative rounded-lg overflow-hidden"
+                        >
+                          {file.type.startsWith("image") ? (
+                            <img
+                              src={file.fullPathUrl}
+                              className="w-full max-w-80 h-full object-cover"
+                              alt=""
+                            />
+                          ) : (
+                            <video
+                              src={file.fullPathUrl}
+                              controls
+                              className="w-full max-w-80 h-full object-cover"
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </MessageRow>
               )}

@@ -55,7 +55,6 @@ http.interceptors.response.use(
 
       try {
         const refreshToken = authStorage.getRefreshToken();
-        console.log(refreshToken);
 
         if (!refreshToken) {
           clearAuth();

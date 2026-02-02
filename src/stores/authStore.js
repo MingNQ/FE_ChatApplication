@@ -20,6 +20,10 @@ export const authStorage = {
     );
   },
 
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem(USER_KEY));
+  },
+
   setTokens(token, refreshToken, rememberMe) {
     localStorage.setItem("rememberMe", rememberMe ? "true" : "false");
 

@@ -14,8 +14,6 @@ export function useChat(activeConversationId, onMessageArrived) {
     const onMessageReceived = (message) => {
       if (message.conversationId != activeConversationId) return;
 
-      console.log(message);
-
       setMessages((prev) => {
         const index = prev.findIndex(
           (m) => m.clientTempId && m.clientTempId === message.clientTempId,
@@ -48,17 +46,19 @@ export function useChat(activeConversationId, onMessageArrived) {
     };
   }, [connection, activeConversationId]);
 
-  const sendMessage = async (content, attachmentIds) => {
+  const sendMessage = async (content, files) => {
     if (!connection) return;
 
     const clientTempId = crypto.randomUUID();
+    const attachmentIds = files.map((f) => f.id);
 
     const optimisticMessage = {
       clientTempId,
       senderId: user.id,
       content,
-      attachmentIds,
+      attachments: files,
       pending: true,
+      sentAt: new Date().toISOString(),
       conversationId: activeConversationId,
     };
 

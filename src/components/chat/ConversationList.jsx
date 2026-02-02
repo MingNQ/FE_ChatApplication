@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../hooks/useAuth";
 import { ConversationItem } from "./ConversationItem";
+import { authStorage } from "../../stores/authStore";
 
 export function ConversationList({
   conversations,
@@ -10,6 +11,7 @@ export function ConversationList({
 }) {
   const { user } = useAuth();
   const { t } = useTranslation();
+  const currentUser = authStorage.getCurrentUser();
 
   return (
     <div className="w-80 bg-white flex flex-col mt-16">
@@ -40,6 +42,7 @@ export function ConversationList({
                   ? conversation.lastMessageContent
                   : t(conversation.lastMessageContentKey)
               }
+              ownMessage={conversation.lastUserSent == currentUser?.id}
               active={members[0].userId === activeFriend?.id}
               onClick={() => {
                 setActiveFriend(members[0].user);

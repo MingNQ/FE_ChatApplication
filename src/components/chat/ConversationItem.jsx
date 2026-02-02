@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export function ConversationItem({
   name,
   lastMessage,
@@ -5,6 +7,8 @@ export function ConversationItem({
   ownMessage,
   onClick,
 }) {
+  const { t } = useTranslation();
+
   return (
     <div
       onClick={onClick}
@@ -22,7 +26,7 @@ export function ConversationItem({
       <div className="flex-1 min-w-0">
         <div className="font-medium truncate">{name}</div>
         <div className="text-sm text-gray-500 truncate">
-          {ownMessage ? "You: " + lastMessage : lastMessage}
+          {ownMessage ? t("chat.own") + lastMessage : lastMessage}
         </div>
       </div>
     </div>
