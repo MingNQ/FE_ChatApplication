@@ -9,6 +9,7 @@ export function SignalRProvider({ children }) {
 
   useEffect(() => {
     if (!token) {
+      console.log("No token");
       if (connection) {
         connection.stop();
         setConnection(null);

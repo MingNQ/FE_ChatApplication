@@ -35,7 +35,11 @@ export function ConversationList({
                   ? conversation.name
                   : members[0].user.fullName
               }
-              lastMessage={conversation.lastMessageContent}
+              lastMessage={
+                conversation.lastMessageContentKey == ""
+                  ? conversation.lastMessageContent
+                  : t(conversation.lastMessageContentKey)
+              }
               active={members[0].userId === activeFriend?.id}
               onClick={() => {
                 setActiveFriend(members[0].user);

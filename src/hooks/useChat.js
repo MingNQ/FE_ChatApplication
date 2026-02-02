@@ -14,23 +14,25 @@ export function useChat(activeConversationId, onMessageArrived) {
     const onMessageReceived = (message) => {
       if (message.conversationId != activeConversationId) return;
 
+      console.log(message);
+
       setMessages((prev) => {
         const index = prev.findIndex(
-          (m) => m.clientTempId && m.clientTempId === message.clientTempId
+          (m) => m.clientTempId && m.clientTempId === message.clientTempId,
         );
 
         if (index !== -1) {
           const clone = [...prev];
           clone[index] = {
-            ...message, 
-            pending: false
+            ...message,
+            pending: false,
           };
           return clone;
         }
 
         return [...prev, message];
       });
-      
+
       onMessageArrived?.(message);
     };
 
@@ -39,14 +41,14 @@ export function useChat(activeConversationId, onMessageArrived) {
     if (connection.state === signalR.HubConnectionState.Connected) {
       connection.invoke("JoinConversation", activeConversationId);
     }
-    
+
     return () => {
       connection.off("MessageReceived", onMessageReceived);
       connection.invoke("LeaveConversation", activeConversationId);
     };
   }, [connection, activeConversationId]);
 
-  const sendMessage = async (content) => {
+  const sendMessage = async (content, attachmentIds) => {
     if (!connection) return;
 
     const clientTempId = crypto.randomUUID();
@@ -55,6 +57,7 @@ export function useChat(activeConversationId, onMessageArrived) {
       clientTempId,
       senderId: user.id,
       content,
+      attachmentIds,
       pending: true,
       conversationId: activeConversationId,
     };
@@ -64,8 +67,9 @@ export function useChat(activeConversationId, onMessageArrived) {
     await connection.invoke("SendMessage", {
       conversationId: activeConversationId,
       content,
+      attachmentIds,
       senderId: user.id,
-      clientTempId
+      clientTempId,
     });
   };
 

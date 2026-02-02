@@ -2,13 +2,16 @@ import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { setCurrentUser, setToken } from "../api/authApi";
 import { clearAuth } from "../api/http";
+import { authStorage } from "../stores/authStore";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("currentUser");
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  const [token, setAuthToken] = useState(null);
+  const [token, setAuthToken] = useState(() => {
+    return authStorage.getToken();
+  });
 
   const login = async (accessToken, refreshToken) => {
     setAuthToken(accessToken);

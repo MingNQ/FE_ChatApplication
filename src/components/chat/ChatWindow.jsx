@@ -15,7 +15,7 @@ export function ChatWindow({
   onSend,
   loadingOld,
   hasMore,
-  loadOlderMessages
+  loadOlderMessages,
 }) {
   const containerRef = useRef(null);
   const shouldAutoScrollRef = useRef(true);
@@ -70,17 +70,48 @@ export function ChatWindow({
 
           return (
             <div key={index}>
-              {showDivider && <DateDivider date={message.sentAt} showDate={showDate}/>}
+              {showDivider && (
+                <DateDivider date={message.sentAt} showDate={showDate} />
+              )}
 
-              <MessageRow
-                key={message.id ?? message.clientTempId}
-                me={activeFriend.id !== message.senderId}
-              >
-                <MessageBubble
-                  text={message.content}
-                  me={activeFriend.id != message.senderId}
-                />
-              </MessageRow>
+              {message.content && (
+                <MessageRow
+                  key={message.id ?? message.clientTempId}
+                  me={activeFriend.id !== message.senderId}
+                >
+                  <MessageBubble
+                    text={message.content}
+                    me={activeFriend.id != message.senderId}
+                  />
+                </MessageRow>
+              )}
+              
+              {message.attachments?.length > 0 && (
+                <MessageRow me={activeFriend.id !== message.senderId}>
+                  <div className="grid gap-2 mt-3">
+                    {message.attachments.map((item) => (
+                      <div
+                        key={item.id}
+                        className="relative rounded-lg overflow-hidden"
+                      >
+                        {item.fileStorage.type.startsWith("image") ? (
+                          <img
+                            src={item.fileStorage.fullPathUrl}
+                            className="w-full max-w-80 h-full object-cover"
+                            alt=""
+                          />
+                        ) : (
+                          <video
+                            src={item.fileStorage.fullPathUrl}
+                            controls
+                            className="w-full max-w-80 h-full object-cover"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </MessageRow>
+              )}
             </div>
           );
         })}

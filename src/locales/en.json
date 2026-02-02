@@ -43,7 +43,9 @@
     },
     
     "chat": {
-        "noAnyConversationYet": "No any conversation yet."
+        "noAnyConversationYet": "No any conversation yet.",
+        "sentImage": "Have sent image",
+        "sentAttachment": "Have sent attachment"
     },
 
     "reaction": {
