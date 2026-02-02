@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Header } from "../../../components/Header";
 import { ConversationList } from "../../../components/chat/ConversationList.jsx";
 import { ChatWindow } from "../../../components/chat/ChatWindow.jsx";
@@ -7,6 +7,7 @@ import { getConversations, getMessages } from "../../../api/conversationApi.js";
 import { useChat } from "../../../hooks/useChat.js";
 import { usePresenceStore } from "../../../stores/presenceStore.js";
 import { useTranslation } from "react-i18next";
+import { SignalRContext } from "../../../contexts/SignalRContext.jsx";
 
 export default function ChatPage() {
   const { user } = useAuth();
@@ -19,6 +20,7 @@ export default function ChatPage() {
   const [loadingOld, setLoadingOld] = useState(false);
   const setBulk = usePresenceStore((state) => state.setBulk);
   const { t } = useTranslation();
+  const connection = useContext(SignalRContext);
 
   const handleMessageArrived = (message) => {
     setRecentConversation((prev) => {
@@ -30,6 +32,7 @@ export default function ChatPage() {
         ...prev[index],
         lastMessageContent: message.content,
         lastMessageSentAt: message.sentAt,
+        lastUserSent: message.senderId,
         unreadCount:
           message.senderId !== user.id
             ? prev[index].unreadCount + 1
@@ -44,6 +47,21 @@ export default function ChatPage() {
     activeConversationId,
     handleMessageArrived,
   );
+
+  useEffect(() => {
+    if (!connection) return;
+
+    const onGlobalMessage = (message) => {
+      handleMessageArrived(message);
+    };
+
+    connection.on("MessageReceived", onGlobalMessage);
+
+    return () => {
+      connection.off("MessageReceived", onGlobalMessage);
+    };
+  }, [connection]);
+
   useEffect(() => {
     if (!activeFriend) return;
 

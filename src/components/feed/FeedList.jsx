@@ -78,7 +78,7 @@ export function FeedList({ userId }) {
   return (
     <div className="flex flex-col gap-4">
       {posts.map((post) => {
-        const myReaction = post.reactions.find((r) => r.userId === user.id);
+        const myReaction = post.reactions.find((r) => r.userId === user?.id);
 
         return (
           <PostItem

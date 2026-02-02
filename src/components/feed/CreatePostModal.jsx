@@ -41,11 +41,9 @@ export function CreatePostModal({ onClose }) {
       visibility: Number(visibility),
       attachments: files.map((f) => f.id),
     };
-    console.log(request);
 
     try {
       const res = await createPost(request);
-      console.log(res);
     } catch {
       alert("Error");
     }

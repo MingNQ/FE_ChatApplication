@@ -49,7 +49,8 @@
     "chat": {
         "noAnyConversationYet": "Chưa có cuộc trò chuyện.",
         "sentImage": "Đã gửi hình ảnh",
-        "sentAttachment": "Đã gửi liên kết"
+        "sentAttachment": "Đã gửi liên kết",
+        "own": "Bạn: "
     },
 
     "reaction": {

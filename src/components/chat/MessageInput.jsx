@@ -8,8 +8,7 @@ export function MessageInput({ onSend }) {
 
   const handleSendMessage = () => {
     if (!text.trim() && files.length <= 0) return;
-    const ids = files.map((file) => file.id);
-    onSend(text, ids);
+    onSend(text, files);
     setText("");
     setFiles([]);
   };
