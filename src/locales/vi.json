@@ -31,7 +31,21 @@
         "recent": "Vừa xong",
         "minutesAgo": "phút trước",
         "hoursAgo": "giờ trước",
-        "dayAgo": "ngày trước"
+        "dayAgo": "ngày trước",
+        "settings": "Cài đặt",
+        "language": "Ngôn ngữ",
+        "appearance": "Giao diện"
+    },
+
+    "language": {
+        "Vietnam": "Tiếng Việt",
+        "English": "Tiếng Anh"
+    },
+
+    "appearance": {
+        "light": "Sáng",
+        "dark": "Tối",
+        "system": "Hệ thống"
     },
 
     "feed": {

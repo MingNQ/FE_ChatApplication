@@ -12,6 +12,7 @@ import ProfilePage from "./pages/clients/home/ProfilePage";
 import { useContext, useEffect } from "react";
 import { SignalRContext } from "./contexts/SignalRContext";
 import { usePresenceStore } from "./stores/presenceStore";
+import { SettingsPage } from "./pages/clients/home/SettingsPage";
 
 function App() {
   const { toasts, removeToast } = useToast();
@@ -79,6 +80,15 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="settings"
+          element={
+            <ProtectedRoute>
+              <SettingsPage />
             </ProtectedRoute>
           }
         />

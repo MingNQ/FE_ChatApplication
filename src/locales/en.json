@@ -27,7 +27,25 @@
         "pending": "Pending",
         "chats": "Chats",
         "online": "Online",
-        "offline": "Offline"
+        "offline": "Offline",
+        "recent": "Vừa xong",
+        "minutesAgo": "minutes ago",
+        "hoursAgo": "hours ago",
+        "dayAgo": "days ago",
+        "settings": "Settings",
+        "language": "Language",
+        "appearance": "Appearance"
+    },
+
+    "language": {
+        "Vietnam": "Vietnam",
+        "English": "English"
+    },
+
+    "appearance": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
     },
 
     "feed": {
