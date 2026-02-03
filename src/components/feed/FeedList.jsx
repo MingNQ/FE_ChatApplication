@@ -83,7 +83,7 @@ export function FeedList({ userId }) {
         return (
           <PostItem
             key={post.id}
-            userId={user.id}
+            userId={user?.id}
             post={post}
             myReaction={myReaction}
             onReact={(id, type, value) => handleOnReact(id, type, value)}
