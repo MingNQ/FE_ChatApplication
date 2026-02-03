@@ -12,7 +12,7 @@ export function HomePage() {
 
       <section className="bg-gray-100 min-h-screen mt-16">
         <div className="relative">
-          <div className="flex justify-center pt-4">
+          <div className="flex justify-center py-4">
             <div className="w-full max-w-2xl px-3">
               <FeedComposer />
               <FeedList />

@@ -14,8 +14,8 @@ export function FriendItem({ friend }) {
         />
 
         <span
-          className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white
-            ${friend.presence.status == 1 ? "bg-green-500" : "bg-gray-400"}
+          className={`absolute bottom-0 right-0 w-3 h-3 
+            ${friend.presence.status == 1 ? "bg-green-500 rounded-full border-2 border-white" : ""}
           `}
         />
       </Link>
