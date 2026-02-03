@@ -98,10 +98,13 @@ export default function ChatPage() {
   }, [user]);
 
   const loadOlderMessages = async (containerRef) => {
+    if (loadingOld || !hasMore) return;
+
     setLoadingOld(true);
 
     const el = containerRef.current;
-    const prevHeight = el.scrollHeight;
+    const prevScrollHeight = el.scrollHeight;
+    const prevScrollTop = el.scrollTop;
 
     const response = await getMessages(activeConversationId, cursor);
 
@@ -110,10 +113,9 @@ export default function ChatPage() {
     setHasMore(response.result.hasMore);
 
     requestAnimationFrame(() => {
-      const newHeight = el.scrollHeight;
-      el.scrollTop = newHeight - prevHeight;
+      const newScrollHeight = el.scrollHeight;
+      el.scrollTop = prevScrollTop + (newScrollHeight - prevScrollHeight);
     });
-
     setLoadingOld(false);
   };
 
