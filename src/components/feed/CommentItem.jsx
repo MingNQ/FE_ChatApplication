@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { formatTimeAgo } from "../../utils/dateTimeUtils";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 
 export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -24,22 +25,29 @@ export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
 
   return (
     <div>
-      <div className="flex gap-3">
-        <img
-          src={comment.user?.avatar ?? "images/default-avatar.jpg"}
-          className="w-8 h-8 rounded-full object-cover"
-        />
+      <div className="flex gap-2">
+        <Link to={`${comment.user?.id}`} className="mt-1">
+          <img
+            src={comment.user?.avatar ?? "images/default-avatar.jpg"}
+            className="w-8 h-8 rounded-full object-cover"
+          />
+        </Link>
 
         <div
           className="
             flex flex-col max-w-[85%]
-            bg-gray-100 rounded-xl px-3 py-2
+            bg-gray-100 rounded-xl px-2 pt-1 pb-2
             text-sm
             break-words
             whitespace-pre-wrap
           "
         >
-          <div className="font-semibold text-sm">{comment.user?.fullName}</div>
+          <Link
+            to={`${comment.user?.id}`}
+            className="font-semibold text-sm hover:underline "
+          >
+            {comment.user?.fullName}
+          </Link>
 
           {!isEditing ? (
             <p className="text-sm">{comment.content}</p>
@@ -60,7 +68,7 @@ export function CommentItem({ post, userId, comment, onDelete, onEdit }) {
         </div>
       </div>
 
-      <div className="flex mt-1 ml-1 items-center gap-4 px-11 text-xs text-gray-500">
+      <div className="flex mt-1 items-center gap-4 px-11 text-xs text-gray-500">
         <span>{formatTimeAgo(new Date(comment.createdOn))}</span>
 
         {!isEditing && (

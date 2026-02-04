@@ -27,9 +27,12 @@ export function SignIn() {
   const { toast } = useToast();
   const { t } = useTranslation();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     try {
       const data = await initiateSignIn({ contact: email, password: password });
@@ -42,10 +45,15 @@ export function SignIn() {
       }
     } catch (e) {
       setError(e.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleVerifyOtp = async () => {
+    setError("");
+    setIsLoading(true);
+
     try {
       const data = await verifySignIn({
         contact: email,
@@ -68,6 +76,8 @@ export function SignIn() {
       }
     } catch (e) {
       setError(e.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -128,8 +138,18 @@ export function SignIn() {
                   {t("auth.rememberMe")}
                 </label>
 
-                <button className="w-full bg-blue-600 text-white py-2 rounded">
-                  {t("auth.signIn")}
+                {isLoading && (
+                  <div className="flex justify-center">
+                    <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+
+                <button
+                  disabled={isLoading}
+                  className={`w-full py-2 rounded text-white 
+                    ${isLoading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600"}`}
+                >
+                  {isLoading ? t("common.loading") : t("auth.signIn")}
                 </button>
               </form>
 
@@ -144,11 +164,20 @@ export function SignIn() {
             <>
               <div className="space-y-4">
                 <OtpInput value={otp} onChange={setOtp} />
+
+                {isLoading && (
+                  <div className="flex justify-center">
+                    <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+
                 <button
+                  disabled={isLoading}
                   onClick={handleVerifyOtp}
-                  className="w-full bg-blue-600 text-white py-2 rounded"
+                  className={`w-full text-white py-2 rounded
+                    ${isLoading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600"}`}
                 >
-                  {t("auth.verifyOtp")}
+                  {isLoading ? t("common.loading") : t("auth.verifyOtp")}
                 </button>
               </div>
 
