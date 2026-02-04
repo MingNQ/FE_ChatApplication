@@ -15,13 +15,20 @@ export default function FeedComposer() {
           ${open ? "pointer-events-none opacity-60" : "cursor-pointer"}
         `}
       >
-        <input
-          placeholder={t("feed.whatIsOnYourMind")}
-          disabled={open}
-          className={`w-full px-4 py-3 bg-gray-100 rounded-full outline-none cursor-pointer
+        <div className="flex items-center gap-3">
+          <img
+            src="images/default-avatar.jpg"
+            className="w-10 h-10 rounded-full"
+          />
+
+          <input
+            placeholder={t("feed.whatIsOnYourMind")}
+            disabled={open}
+            className={`w-full h-10 px-4 bg-gray-100 rounded-full outline-none cursor-pointer
             ${open ? "opacity-60 cursor-not-allowed" : ""}
             `}
-        />
+          />
+        </div>
 
         <div className="flex justify-between mt-3 text-base text-gray-600">
           <button type="button" className="flex gap-1 hover:text-blue-500">
